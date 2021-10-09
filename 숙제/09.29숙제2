@@ -1,0 +1,9 @@
+09/29 숙제
+
+1. int sum;
+2. double rate;
+3. int number = 10;
+4. byte n1,n2,n3;
+5. char c1 = 'a';
+   char c2 = 'b';
+6. double distance = 9.12345;  
