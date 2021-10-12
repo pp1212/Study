@@ -1,0 +1,14 @@
+
+1. if(count>=20 && count<60)
+	count++;
+ 
+2. if(x>y){
+	max=x;
+	min=y;
+   }else{	
+	max=y;
+	min=x;
+   }
+
+3. if(x>=1 && x<=20)
+	y=x;  
