@@ -31,7 +31,7 @@ class StudentTest02
 	{
 		
 		Student s;
-		s.name = "홍길동";
+		s.name = "홍길동";  //객체 생성하지 않았기 때문에 바로 사용할 수 없음
 
 	}
 }

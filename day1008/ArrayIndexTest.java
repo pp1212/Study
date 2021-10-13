@@ -11,7 +11,7 @@ class ArrayIndexTest
 		System.out.println(arr[3]);
 		System.out.println(arr[4]);
 		
-		System.out.println(arr[5]);
+		System.out.println(arr[5]);//¿À·ù
 
 	}
 }

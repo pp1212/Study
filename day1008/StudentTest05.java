@@ -33,7 +33,7 @@ class StudentTest05
 		Scanner sc = new Scanner(System.in);
 		Student []s = new Student[5];   
 		for (int i=0;i<s.length ;i++ ){
-			s[i] = new Student();  //i가 0이면 0번째 객체생성
+			s[i] = new Student();  //i가 0이면 0번째 배열객체생성
 			System.out.printf("%d번째 학생의 이름을 입력하시오--->",i+1);
 			s[i].name = sc.next();
 			System.out.printf("%d번째 학생의 국어점수를 입력하시오--->",i+1);

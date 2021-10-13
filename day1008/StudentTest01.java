@@ -32,7 +32,8 @@ class StudentTest01
 		
 		Scanner sc = new Scanner(System.in);
 		Student s = new Student();   //new->객체생성해라,Student->라는 형태,s->변수
-		/*s 안에는 String name;
+		/*s 안에는 
+		String name;
 		int kor;
 		int eng;
 		int math;

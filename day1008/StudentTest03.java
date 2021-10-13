@@ -32,7 +32,7 @@ class StudentTest03
 		
 		Student s;
 		s = new Student(); //객체 생성하는 문장
-		s.name = "홍길동";
+		s.name = "홍길동";  //객체 생성했기 때문에 사용 가능
 		System.out.println(s.name);
 	
 	

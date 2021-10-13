@@ -62,4 +62,4 @@ class CellPhoneTest
 		System.out.printf("%s에서 출시된 %s색깔의 %s는 카메라가 %s되어있다.\n"
 			,a.company,a.color,a.name,a.camera);
 	}
-}
+}

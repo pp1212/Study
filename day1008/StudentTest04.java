@@ -33,7 +33,7 @@ class StudentTest04
 		
 
 		Student []s = new Student[1];   //Student 배열 1개 만들어라(객체 생성은 아님)
-		//s[0].name = "홍길동";  
+		//s[0].name = "홍길동";  위에 객체생성을 아직 하지 않았기 때문에 이렇게 바로 사용할 수 없음
 		s[0] = new Student(); //객체생성
 		s[0].name = "홍길동";  //그 다음에 값 넣을 수 있음
 		System.out.println(s[0].name);
