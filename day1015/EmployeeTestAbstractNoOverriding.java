@@ -129,7 +129,7 @@ class HourlyEmployee extends Employee
 
 }
 
-class  EmployeeTestAbstractNotOverriding
+class  EmployeeTestAbstractNoOverriding
 {
 	public static void main(String[] args) 
 	{
