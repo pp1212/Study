@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -26,6 +27,20 @@ public class BookTest extends JFrame {
 	Vector<Vector> rowData;
 	Vector colNames;
 	BookDao dao;
+	
+	public void printBook() {
+		rowData.clear();
+		ArrayList<BookVo> list = dao.listBook();
+		for(BookVo b : list) {
+			Vector v = new Vector();
+			v.add(b.getNo());
+			v.add(b.getName());
+			v.add(b.getComp());
+			v.add(b.getPrice());
+			rowData.add(v);
+		}
+		table.updateUI();
+	}
 	
 	public BookTest() {
 		dao = new BookDao();
@@ -86,27 +101,65 @@ public class BookTest extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
+				int no = Integer.parseInt(jtf_no.getText());
+				String name = jtf_name.getText();
+				String comp = jtf_comp.getText();
+				int price = Integer.parseInt(jtf_price.getText());
+				
+				BookVo b = new BookVo(no, name, comp, price);
+				int re = dao.insertBook(b);
+				if(re == 1) {
+					System.out.println("도서정보 추가에 성공하였습니다.");
+					printBook();
+				}else {
+					System.out.println("도서정보 추가에 실패하였습니다.");
+				}
 			}});
+		
 		btn_list.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
+				printBook();
 			}});
+		
 		btn_update.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
+				int no = Integer.parseInt(jtf_no.getText());
+				String name = jtf_name.getText();
+				String comp = jtf_comp.getText();
+				int price = Integer.parseInt(jtf_price.getText());
+				
+				BookVo b = new BookVo(no, name, comp, price);
+				int re = dao.updateBook(b);
+				if(re == 1) {
+					System.out.println("도서정보 수정에 성공하였습니다.");
+					printBook();
+				}else {
+					System.out.println("도서정보 수정에 실패하였습니다.");
+				}
 			}});
+		
 		btn_delete.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
+				int no = Integer.parseInt(jtf_no.getText());
+				int re = dao.deleteBook(no);
+				if(re == 1) {
+					System.out.println("도서정보 삭제에 성공하였습니다.");
+					printBook();
+				}else {
+					System.out.println("도서정보 삭제에 실패하였습니다.");
+				}
 			}});
 		table.addMouseListener(new MouseListener() {
 
@@ -127,6 +180,12 @@ public class BookTest extends JFrame {
 				// TODO Auto-generated method stub
 				int index = table.getSelectedRow();
 				Vector v = rowData.get(index);
+				jtf_no.setText(v.get(0)+"");
+				jtf_name.setText(v.get(1)+"");
+				jtf_comp.setText(v.get(2)+"");
+				jtf_price.setText(v.get(3)+"");
+				
+				
 			}
 
 			@Override

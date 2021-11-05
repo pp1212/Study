@@ -99,6 +99,7 @@ public class BookDao {
 			pstmt.setString(1, b.getName());	//?의 값을 찾아서 넣기
 			pstmt.setString(2, b.getComp());
 			pstmt.setInt(3, b.getPrice());
+			pstmt.setInt(4, b.getNo());
 			
 			re = pstmt.executeUpdate();
 		} catch (Exception e) {
