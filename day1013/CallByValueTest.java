@@ -20,7 +20,7 @@ class CallByValueTest
 	public static void main(String[] args)  //100
 	{
 		int data = 100;
-		plusOne(data);
+		plusOne(data);   //ȣ�⹮
 		System.out.println(data);
 	}
 }

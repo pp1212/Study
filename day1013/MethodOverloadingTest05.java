@@ -12,7 +12,7 @@ class SistUtil
 		return result;
 	}
 	/*
-	public static void max(int a,int b,int c){
+	public static int max(int a,int b,int c){
 		int result = max(a,b);   //a,b중에 큰수를 먼저 담기
 		result = max(result,c);
 		return result;
