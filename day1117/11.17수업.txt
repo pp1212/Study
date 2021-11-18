@@ -193,51 +193,6 @@
 	alter table emp add jumin varchar2(14);
 
 
-update emp set email='liver_pool9@naver.com' where eno=1000;
-update emp set jumin='950729-1234567' where eno=1000;
-	
-update emp set email='ksy03170317@naver.com' where eno=1001;
-update emp set jumin='940427-2222333' where eno=1001;
-
-update emp set email='hyeonho0712@nate.com' where eno=1002;
-update emp set jumin='960712-1077155' where eno=1002;
-
-update emp set email= 'tennyyun@naver.com' where eno = 1003;
-update emp set jumin='970209-122448'where eno=1003;
-
-update emp set email='pagy1218@hanmail.net' where eno=1004;
-update emp set jumin='951218-2000000' where eno=1004;
-
-update emp set email = 'anjgkwl123@naver.com' where eno = 1005;
-update emp set jumin = '950901-2123456' where eno = 1005;
-
-update emp set jumin ='990120-2011111' where eno=1006;
-update emp set email ='youlovelive@daum.net' where eno = 1006;
-
-update emp set email='ibisevic@naver.com' where eno=1007;
-update emp set jumin='971021-2234598' where eno=1007;
-
-update emp set email = 'envayu00@gmail.com' where eno = 1008;
-update emp set jumin = '950709-2000000' where eno = 1008;
-
-update emp set email = 'ysa_1010@naver.com' where eno = 1009;
-update emp set jumin = '931123-2000000' where eno = 1009;
-
-update emp set email ='jayoung1222@naver.com' where eno=1010;
-update emp set jumin='961222-2015436' where eno=1010;
-
-update emp set email = 'vipwhy12@naver.com' where eno = 1011;
-update emp set jumin = '971216-2222222' where eno = 1011;
-
-update emp set email='psm5590@naver.com' where eno =1012;
-update emp set jumin='940223-2345678' where eno=1012;
-
-update emp set email = 'hkhaoo@naver.com' where eno = 1013;
-update emp set jumin = '950207-1031234' where eno = 1013;
-
-update emp set email = 'yoon@naver.com' where eno = 1014;
-update emp set jumin = '650207-1031234' where eno = 1014;
-
 
 	연습)개발팀에 근무하는 여성직원들에게 특별 상여금 지급하려고 함
 		대상자의 상여금은 연봉의 30%
@@ -251,7 +206,7 @@ update emp set jumin = '650207-1031234' where eno = 1014;
 	e.dno = d.dno and
 	substr(e.jumin,8,1)='2' and
 	dname like '개발%'
-	order by 상여금 desc, e.ename;
+	order by (e.salary+e.comm)*12*0.3 desc, e.ename;
 	
 	
 -----------------------------------------------------------------------
@@ -402,8 +357,7 @@ update emp set jumin = '650207-1031234' where eno = 1014;
 	--------------
 	*hello*
 	
-	
-	-실험을 우히ㅐ 
+	 
 	insert into customer values(11,'   tiger','대한민국 강원도','010-3333-3333');
 	insert into customer values(12,'TIGER   ','대한민국 서울','010-4444-3333');
 	insert into customer values(13,'   Tiger   ','대한민국 대구','010-5555-3333');
@@ -511,23 +465,118 @@ update emp set jumin = '650207-1031234' where eno = 1014;
 	where e.dno = d.dno and
 	to_char(sysdate,'yyyy')-to_char(hiredate,'yyyy') >= 3;
 	
+------------------------------------------------------------------------------
 
 	●months_between(날짜1,날짜2)
 		=> 두 날짜 사이의 개월수 반환하는 함수
 			*날짜1이 최근(큰)의 날짜여야 함
 	
+	1995/07/29
+	select months_between(sysdate,'1995/07/29') from dual;
+	
+	연습)모든 직원들의 사원번호,이름,입사일,근무개월수 출력
+		단,근무개월수가 높은 순으로 출력
+		
+	select eno,ename,hiredate,months_between(sysdate,hiredate)
+	from emp
+	order by months_between(sysdate,hiredate) desc;
+	
+	연습)'판교'나 '서교동'에 근무하는 직원들 중에 근무개월수가 24개월 이상인 직원들의 
+		사원번호,사원명,입사일,부서번호,부서명,근무개월수 출력
+		단,근무개월수가 높은 순으로 출력하고 소수점 이하는 버림수를 취함
+	
+	select eno,ename,hiredate,d.dno,dname,floor(months_between(sysdate,hiredate)) "근무개월수"
+	from emp e, dept d
+	where e.dno = d.dno and
+	dloc in ('판교','서교동') and
+	floor(months_between(sysdate,hiredate)) >= 24
+	order by floor(months_between(sysdate,hiredate)) desc;
+	
+	**애칭 지어도 where 절에서는 애칭 제외한 함수 적어줘야 함
+	
+	**날짜 사이의 연산이 가능
+	select sysdate-1,sysdate,sysdate+1 from dual;
+	
+	select to_date('1995/07/29','yyyy/mm/dd')+100 from dual;
+	
+	-1번 고객의 구매일을 모두 작년 날짜로 바꿈
+	update orders set orderdate = orderdate - 365
+	where custid = (select custid from customer where name='박지성');
+	
+	update orders set orderdate = orderdate - (365*2)
+	where custid = (select custid from customer where name='추신수');
 	
 	
+	연습)최근 6개월간 구매이력이 없는 고객에게 이벤트 문자를 발송하려고 함
+		대상자의 이름과 전화번호,가장 최근의 구매일,구매하지 않은 개월수 출력
+		단,구매하지 않는 개월수는 소수점 이하 절삭하여 표현
+		
+	select distinct name,phone,
+	(select max(orderdate) from orders o2 where o1.custid = o2.custid),
+	floor(months_between(sysdate,(select max(orderdate) from orders o2 where o1.custid = o2.custid)))
+	from orders o1,customer c
+	where o1.custid = c.custid and
+	floor(months_between(sysdate,(select max(orderdate) from orders o2 where o1.custid = o2.custid))) >= 6;
+	
+	NAME       PHONE           (SELECTM
+	---------- --------------- --------
+	FLOOR(MONTHS_BETWEEN(SYSDATE,(SELECTMAX(ORDERDATE)FROMORDERSO2WHEREO1.CUSTID=O2.
+	--------------------------------------------------------------------------------
+	박지성     010-5000-0001   20/11/16
+	                                                                              12
+	
+	추신수     010-8000-0001   19/11/08
+	                                                                              24
 	
 	
+	select e.eno,e.ename,e.hiredate,(e.salary+e.comm)*12,
+	rpad(substr(e.jumin,1,8),14,'*') jumin,substr(e.email,1,instr(e.email,'@')-1)
+	from emp e,emp m 
+	where e.mgr=m.eno and
+	m.ename=? and
+	months_between(sysdate,m.hiredate)=?
+
+	
+	select e.eno,e.ename,e.hiredate,(e.salary+e.comm)*12,
+	rpad(substr(e.jumin,1,8),14,'*') jumin,substr(e.email,1,instr(e.email,'@')-1)
+	from emp e,emp m 
+	where e.mgr=m.eno and
+	m.ename=? and
+	? <= months_between(sysdate,e.hiredate)
+	
+	select eno,ename,mgr,months_between(sysdate,hiredate) from emp;
+	
+	SQL> select eno,ename,mgr,months_between(sysdate,hiredate) from emp;
+
+  	ENO ENAME        MGR MONTHS_BETWEEN(SYSDATE,HIREDATE)
+	----- ---------- ----- --------------------------------
+	 1014 윤석열      1005                       .201734618
+	 1000 이건우                                 260.475311
+	 1001 김수연      1000                       20.4753114
+	 1002 최현호      1000                       20.4753114
+	 1003 윤태인      1000                       42.2495049
+	 1004 박지예      1001                       53.4753114
+	 1005 김지현      1002                       .227957363
+	 1006 김시아      1003                       68.4753114
+	 1007 유하림      1004                       6.47531138
+	 1008 임하연      1004                       17.4753114
+	 1009 윤서우      1005                       9.47531138
+	
+	  ENO ENAME        MGR MONTHS_BETWEEN(SYSDATE,HIREDATE)
+	----- ---------- ----- --------------------------------
+	 1010 정자영      1005                       10.4753114
+	 1011 노유나      1006                       27.4753114
+	 1012 박성미      1006                       72.4753114
+	 1013 임상진      1006                       8.47531138
+	
+	15 행이 선택되었습니다.
 	
 	
-	
-	
-	
-	
-	
-	
+-----------------------------------------------------------------------------------------
+팀별연습문제) 관리자의 이름과 근무개월수를 입력받아 
+입력한 관리자의 부하직원들 중에 근무개월수 이상인 직원들의 
+사원번호, 사원명, 입사일, 연봉, 주민번호, 아이디를 출력합니다.
+단, 주민번호는 14자리로 출력하되 8번째 자리까지만 출력하고 나머지는 "*"로 채워 출력합니다.	
 	
 
 
