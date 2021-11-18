@@ -18,17 +18,21 @@ public class BookDAO {
 	public ArrayList<BookVO> listBook(String name){
 		ArrayList<BookVO> list = new ArrayList<BookVO>();
 		String sql = "select * from book "
-				+ "	where bookid in (select bookid from "
-				+ "		orders "
-				+ "		where custid = (select custid from( "
-				+ "		select custid, count(bookid) "
-				+ "		from orders "
-				+ "		where bookid in (select bookid from orders where custid = (select custid from customer where name = ?)) "
-				+ "		and custid != (select custid from customer where name = ?) "
-				+ "		group by custid "
-				+ "		order by count(bookid) desc) where rownum = 1) "
-				+ "		minus "
-				+ "		select bookid from orders where custid = (select custid from customer where name = ?))";
+				+ "where bookid in ( "
+				+ "select bookid from orders where custid = (select custid from(select custid, count(bookid) from orders "
+				+ "where bookid in (select bookid from orders where custid = (select custid from customer where name = ?)) "
+				+ "and custid != (select custid from customer where name = ?) "
+				+ "group by custid "
+				+ "order by count(bookid) desc) where rownum = 1) "
+				+ "union "
+				+ "select bookid from ( "
+				+ "select bookid, count(bookid) "
+				+ "from orders "
+				+ "group by bookid "
+				+ "order by count(bookid) desc) "
+				+ "where rownum <= 3 "
+				+ "minus "
+				+ "select bookid from orders where custid = (select custid from customer where name = ?))";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
