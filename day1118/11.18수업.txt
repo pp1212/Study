@@ -1,0 +1,1090 @@
+<null에 대한 처리>
+	null은 아직 값이 정해지지 않은 상태
+	
+	null 	≠		0, ''(빈문자), ' '(공백),'null'
+	null은 값이 없는 상태이고  0,'null','',' '들은 값이 있는 상태
+	
+	where phone is null이라고 검색하였는데 
+		나와야 하는 데이터가 안 나온다면
+		값에 'null'이 들어갔는지 확인할 필요가 있음
+-null+숫자 = null		->	null을 다른 값으로 바꿔서 사용	-> nvl(컬럼이름,값)
+		select salary + 100 from ~
+		select nvl(salary,0) + 100 ~	-> null이면 0으로 바꿔서 연산해라
+-집계함수 계산 시 null이 포함된 행은 집계에서 빠짐
+-해당되는 행이 하나도 없을 경우 sum,avg 함수의 결과는 null이 되며,
+	 count 함수의 결과는 0
+	 	select sum(saleprice) from orders where custid = 100;			-> 해당하는 행이 없어서 0이 나오면
+	 	select nvl(sum(saleprice),0) from orders where custid = 100;	-> nvl사용해서 바꿀 수 있음	
+
+-----------------------------------------------------------------------------------------------------------
+
+
+	
+1)null인 레코드를 찾기 위해서는 비교연산자 사용 불가
+select * from customer where phone = null;
+	==>null인 레코드를 찾기 위해서는 
+		is null
+		is not null
+		연산자 이용해야 함
+		
+select * from customer where phone is null;
+	
+SQL> insert into customer values(5,'박세리','대한민국 대전',null);
+SQL> insert into customer values(14,'안철수','대한민국 서울','');
+SQL> insert into customer values(15,'심상정','대한민국 서울','null');	
+
+SQL> select * from customer where phone is null;
+
+CUSTID NAME       ADDRESS              PHONE
+------ ---------- -------------------- ---------------
+     5 박세리     대한민국 대전
+    14 안철수     대한민국 서울
+    
+    =>'' null로 나오긴 하지만 권장하진 않음
+
+2)null의 연산결과는 null
+
+select eno,ename,salary+10 from emp where ename='윤석열';
+
+  ENO ENAME       SALARY+10
+----- ---------- ----------
+ 1014 윤석열
+
+=>만약 null인 경우 다른 값으로 대체하려면 
+	nvl함수를 이용
+	
+select eno,ename,nvl(salary,0)+10 from emp where ename='윤석열';	
+							↑서브쿼리가 들어갈 수도 있음  ex)자신이 속한 그룹의 평균급여
+select eno,ename,nvl(salary,(select avg(salary) from emp e2 where e1.dno=e2.dno))+10 from emp e1 where ename='윤석열';
+
+--------------------------------------------------------------------------------------------------------------------------
+3)집계함수 계산에 null이 포함된 행은 집계에서 빠짐
+SQL> select sum(salary) from emp;
+
+SUM(SALARY)
+-----------
+       7830
+
+select avg(salary) from emp;
+select sum(salary)/count(*) from emp;
+select sum(salary)/count(salary) from emp;
+
+QL> select avg(salary) from emp;
+
+AVG(SALARY)
+-----------
+ 559.285714
+
+SQL> select sum(salary)/count(*) from emp;
+
+SUM(SALARY)/COUNT(*)
+--------------------
+                 522
+
+SQL> select sum(salary)/count(salary) from emp;
+
+SUM(SALARY)/COUNT(SALARY)
+-------------------------
+               559.285714
+
+==> avg함수는
+	전체합을 전체레코드의 수로 나누는 것이 아니라
+	null이 아닌 개수로 나누어 줌
+
+select avg(nvl(salary,0)) from emp;
+AVG(NVL(SALARY,0))
+------------------
+               522
+
+==> 전체 레코드의 수로 나누기 하려면
+	nvl함수를 이용하여 다른 값으로 대체
+
+-----------------------------------------------------------------------------------
+4)해당하는 행이 하나도 없을 경우
+	sum,avg함수의 결과는 null이 되며
+	count함수의 결과는 0
+
+select sum(saleprice),avg(saleprice),count(custid) from orders where
+custid = 1;
+
+select sum(saleprice),avg(saleprice),count(custid) from orders where
+custid = 14;
+
+SUM(SALEPRICE) AVG(SALEPRICE) COUNT(CUSTID)
+-------------- -------------- -------------
+                                          0
+
+select nvl(sum(saleprice),0),nvl(avg(saleprice),0),count(custid) from orders where
+custid = 14;
+
+NVL(SUM(SALEPRICE),0) NVL(AVG(SALEPRICE),0) COUNT(CUSTID)
+--------------------- --------------------- -------------
+                    0                     0             0
+                    
+연습)고객이름별로 총구매금액,평균구매금액,구매횟수 출력
+	단,구매내역이 없는 사람들도 출력이 되도록 함
+select name,nvl(sum(saleprice),0),nvl(avg(saleprice),0),count(saleprice)
+from customer c left outer join orders o
+on o.custid = c.custid
+group by name;
+
+NAME       NVL(SUM(SALEPRICE),0) NVL(AVG(SALEPRICE),0) COUNT(SALEPRICE)
+---------- --------------------- --------------------- ----------------
+박지성                    108000                 21600                5
+김연아                     15000                  7500                2
+장미란                     31000            10333.3333                3
+추신수                     33000                 16500                2
+박세리                         0                     0                0
+윤석열                     78500                 19625                4
+이재명                     55000                 27500                2
+Tiger                          0                     0                0
+tiger                          0                     0                0
+TIGER                          0                     0                0
+   tiger                       0                     0                0
+
+NAME       NVL(SUM(SALEPRICE),0) NVL(AVG(SALEPRICE),0) COUNT(SALEPRICE)
+---------- --------------------- --------------------- ----------------
+TIGER                          0                     0                0
+   Tiger                       0                     0                0
+안철수                         0                     0                0
+심상정                         0                     0                0
+
+------------------------------------------------------------------------------
+	●rownum()
+	select문에서 사용되며,검색한 결과에 행번호를 붙여줌
+	ex)게시판 - 한 화면에 10개씩 보여줄 때
+	
+	=> select에 의해 검색된 결과에 차례대로 순번을 매겨주는 가상컬럼
+	=> select에 의해 검색된 결과로부터 일부분만 잘라내기 위하여 rownum사용
+	
+	연습)모든 사원의 이름 출력,순번을 차례대로 매겨서 출력
+	select rownum,ename from emp;
+	
+	연습)사원의 이름 3명만 출력
+	select rownum,ename from emp where rownum<=3;
+	select ename from emp where rownum<=3;
+	
+	연습)'서교동'에 근무하는 여성직원
+		2명만 출력
+		사원번호,사원명,부서명
+	select eno,ename,dname
+	from emp e , dept d
+	where e.dno = d.dno and
+	rownum <=2 and
+	dloc='서교동' and
+	substr(jumin,8,1)='2';
+
+	연습)가장 가격이 비싼 도서의 정보 출력
+	select * from book
+	where rownum =1
+	order by price desc;
+	
+	BOOKID BOOKNAME             PUBLISHER     PRICE
+	------ -------------------- ---------- --------
+	     1 축구의 역사          굿스포츠      7,000
+	
+	==> 원하는 결과를 얻을 수 없음!
+		where절을 먼저 실행함.그러니까 그냥 원래 데이터에서 1개 뽑아와서 정렬
+		
+		order by한 것중에 rownum 조건식을 사용하려면
+		==> 반드시 서브쿼리를 사용해야 합니다!
+  				order by 로 정렬한 select의 결과를 from절의 가상의 테이블로 두고 
+  				사용해야 합니다.
+		
+		
+	select * from book order by price desc
+	
+	select * from (select * from book order by price desc)
+	where rownum=1;
+	
+	BOOKID BOOKNAME             PUBLISHER     PRICE
+	------ -------------------- ---------- --------
+	    13 재미있는 오라클      쌍용미디어   50,000
+
+	연습)개발팀에 근무하는 급여가 가장 높은 
+		상위 2명의 
+		사원번호,사원명,급여를 출력
+		
+	select eno,ename,nvl(salary,0)
+	from emp e,dept d
+	where e.dno=d.dno and
+	dname like '개발%'
+	order by nvl(salary,0) desc;
+
+	select * from (select eno,ename,nvl(salary,0)
+	from emp e,dept d
+	where e.dno=d.dno and
+	dname like '개발%'
+	order by nvl(salary,0) desc)
+	where rownum<=2;
+
+	  ENO ENAME      NVL(SALARY,0)
+	----- ---------- -------------
+	 1001 김수연               800
+	 1002 최현호               700
+
+	연습)판매수량이 가장 저조한 3권의 도서를 절판하려고 함
+		대상이 되는 도서의 정보 출력
+		
+	-orders 테이블에서 도서번호별로 판매수량을 출력,판매수량이 높은 순
+	select bookid,count(bookid) from orders group by bookid order by count(bookid)
+	
+	select bookid from (select bookid,count(bookid) from orders group by bookid order by count(bookid))
+	where rownum<=3
+	
+	select * from book
+	where bookid in(select bookid from (select bookid,count(bookid) from orders group by bookid order by count(bookid))
+	where rownum<=3);
+	
+--------------------------------------------------------------------------------------------------------
+	==>판매가 되지 않은 도서를 포함시켜야 함
+	
+	select b.bookid,count(o.bookid) 
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid)
+
+	select bookid from (select b.bookid,count(o.bookid) 
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid))
+	where rownum <= 3
+	
+	BOOKID
+	------
+	    11
+	     1
+	     5
+	
+	
+	select * from book
+	where bookid in (select bookid from (select b.bookid,count(o.bookid) 
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid))
+	where rownum <= 3);
+	
+	BOOKID BOOKNAME             PUBLISHER     PRICE
+	------ -------------------- ---------- --------
+	    11 재미있는 축구        쌍용미디어   17,000
+	     1 축구의 역사          굿스포츠      7,000
+	     5 피겨 교본            굿스포츠      8,000
+
+	------------------------------------------------------------------------------
+	판매수량순으로 정렬하였을 때 3번째 판매수량은 1권
+	==> 판매수량이 1권인 모든 도서를 절판도서에 포함시키려고 함
+	
+	-도서번호별로 판매수량순으로 정렬하여 3번째에 해당하는 판매수량 검색
+	select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid)					=>B
+	
+	select rownum n,cnt
+	from(select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid));
+
+	select cnt from(select rownum n,cnt
+	from(select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid)))
+	where n=3;									=>A
+	
+	B중에서 cnt가 A와 동일한 도서번호들을 출려
+	select bookid from (select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid))
+	where cnt<=(select cnt from(select rownum n,cnt
+	from(select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid)))
+	where n=3);									=>C
+
+	==>도서번호별로 판매수량을 오름차순 정렬했을 때
+		3번째의 판매수량과 동일한 판매수량의 모든 도서번호 출력
+		
+	select * from book
+	where bookid in (select bookid from (select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid))
+	where cnt<=(select cnt from(select rownum n,cnt
+	from(select b.bookid,count(o.bookid) cnt
+	from book b left outer join orders o
+	on b.bookid=o.bookid
+	group by b.bookid 
+	order by count(o.bookid)))
+	where n=3));
+	
+	BOOKID BOOKNAME             PUBLISHER     PRICE
+------ -------------------- ---------- --------
+     1 축구의 역사          굿스포츠      7,000
+     2 축구아는 여자        나무수       13,000
+     3 축구의 이해          대한미디어   22,000
+     4 골프 바이블          대한미디어   35,000
+     5 피겨 교본            굿스포츠      8,000
+     7 야구의 추억          이상미디어   20,000
+     9 올림픽 이야기        삼성당        7,500
+    11 재미있는 축구        쌍용미디어   17,000
+    12 이기는 축구기술      굿스포츠     20,000
+    14 재미있는 자바        쌍용미디어   30,000
+
+-----------------------------------------------------------------------------------
+
+<숙제풀이>
+create table department(
+deptno number primary key,
+deptname varchar2(20),
+manager number
+);
+
+
+create table employee(
+empno number primary key,
+name varchar2(20),
+phoneno varchar2(20),
+address varchar2(50),
+sex varchar2(10),
+position varchar2(20),
+deptno references department(deptno)
+);
+
+alter table department add foreign key(manager) references employee(empno);
+
+->depatment랑 employee는 서로 참조
+	references를 할 수 없으니까 나중에 만들고 추가
+	
+**부서테이블의 관리자번호는 사원테이블의 사원번호를 참조해야 함
+또,사원테이블의 부서번호는 부서테이블의 부서번호를 참조해야 함
+==>서로가 서로를 참조하고 있음
+이 때에는 부서테이블 만들 때는 사원테이블이 아직 만들어지기 전이기 때문에
+참조키를 설정 할 수 없음.일단 만들어두고 사원테이블 만든 다음에
+테이블 수정 명령어로 참조키 설정해야 함
+
+	
+	
+	
+
+create table project(
+projno number primary key,
+projname varchar2(30),
+deptno number references department(deptno)
+);
+
+create table works(
+empno number references employee(empno),
+projno number references project(projno),
+hours_worked number,
+primary key(empno,projno)
+);
+
+insert into department values(10,'개발1팀',null);
+insert into department values(20,'개발2팀',null);
+insert into department values(30,'개발3팀',null);
+
+insert into employee values(1,'김수연','010-1111-1111','서울','여','팀장',10);
+insert into employee values(2,'박지예','010-1111-1111','서울','여','사원',10);
+insert into employee values(3,'유하림','010-1111-1111','서울','여','사원',10);
+insert into employee values(4,'이건우','010-1111-1111','서울','남','사원',10);
+insert into employee values(5,'임하연','010-1111-1111','서울','여','사원',10);
+
+update department set manager=1 where deptno=10;
+
+insert into employee values(6,'최현호','010-1112-1111','서울','남','팀장',20);
+insert into employee values(7,'김지현','010-1113-1111','서울','여','사원',20);
+insert into employee values(8,'윤서우','010-1114-1111','서울','여','사원',20);
+insert into employee values(9,'정자영','010-1115-1111','서울','여','사원',20);
+
+update department set manager=6 where deptno=20;
+
+insert into employee values(10,'윤태인','010-1112-1112','서울','남','팀장',30);
+insert into employee values(11,'김시아','010-1113-1113','서울','여','사원',30);
+insert into employee values(12,'노유나','010-1114-1114','서울','여','사원',30);
+insert into employee values(13,'박성미','010-1115-1115','서울','여','사원',30);
+insert into employee values(14,'임상진','010-1115-1116','서울','남','사원',30);
+
+update department set manager=10 where deptno=30;
+
+insert into project values(1,'우리은행 차세대 시스템',10);
+insert into project values(2,'하나은행 차세대 시스템',20);
+insert into project values(3,'국회도서관 고도화',30);
+insert into project values(4,'쌍용교육센터 LMS',10);
+
+insert into works values(1,1,0);
+insert into works values(2,1,0);
+insert into works values(3,1,0);
+insert into works values(4,1,0);
+
+insert into works values(5,4,0);
+
+insert into works values(6,2,0);
+insert into works values(7,2,0);
+insert into works values(8,2,0);
+insert into works values(9,2,0);
+
+insert into works values(10,3,0);
+insert into works values(11,3,0);
+insert into works values(12,3,0);
+insert into works values(13,3,0);
+insert into works values(14,3,0);
+
+2)모든 사원의 이름 출력
+select name from employee;
+
+3)여자 사원의 이름 출력
+select name from employee where sex='여';
+
+4)팀장의 이름을 출력
+select name from employee 
+where empno in (select manager from department);
+
+5)개발3팀에 일하는 사원의 이름과 주소 출력
+select name,address from employee
+where deptno = (select deptno from department where deptname='개발3팀');
+
+6)'김수연'팀장 부서에서 일하는 사원의 수 출력
+select deptno from department where manager =(select empno from employee where name='김수연');
+
+DEPTNO
+------
+    10
+
+select count(*) from employee
+where deptno = (select deptno from department where manager =(select empno from employee where name='김수연'));
+
+  COUNT(*)
+----------
+         5
+
+select count(*) from employee
+where deptno = (select deptno from department where manager =(select empno from employee where name='김수연')) and
+position = '사원';
+
+  COUNT(*)
+----------
+         4
+
+7)사원들이 일한 시간 수를 부서별,사원이름별 오름차순으로 출력
+
+update works set hours_worked = 40;
+update works set hours_worked = 50 where projno = 3;
+update works set hours_worked = 80 where projno = 2;
+
+update works set hours_worked = 100 where empno = 3;
+update works set hours_worked = 90 where empno = 8;
+update works set hours_worked = 70 where empno = 13;
+
+select deptname,name,hours_worked 
+from employee e,department d,project p,works w
+where e.deptno = d.deptno and
+d.deptno = p.deptno and
+p.projno = w.projno and
+e.empno = w.empno 
+order by deptname,name;
+
+DEPTNAME   NAME       HOURS_WORKED
+---------- ---------- ------------
+개발1팀    김수연               40
+개발1팀    박지예               40
+개발1팀    유하림              100
+개발1팀    이건우               40
+개발1팀    임하연               40
+개발2팀    김지현               80
+개발2팀    윤서우               90
+개발2팀    정자영               80
+개발2팀    최현호               80
+개발3팀    김시아               50
+개발3팀    노유나               50
+
+DEPTNAME   NAME       HOURS_WORKED
+---------- ---------- ------------
+개발3팀    박성미               70
+개발3팀    윤태인               50
+개발3팀    임상진               50
+
+
+8)두 명 이상의 사원이 참여한 프로젝트의 번호,이름,사원의 수 출력
+select p.projno,projname,count(empno)
+from project p,works w
+where p.projno = w.projno
+group by p.projno,projname
+having count(empno)>=2;
+
+
+9)5명 이상의 사원이 있는 부서의 사원이름 출력
+-부서번호 별로 사원의 수 출력
+select deptno from employee group by deptno having count(empno)>=5;
+
+-위의 부서에 근무하는 사원이름 출력
+select name from employee
+where deptno in (select deptno from employee group by deptno having count(empno)>=5);
+
+
+--------------------------------------------------------------------------------------------
+<서브쿼리>
+	SQL문장 안에 포함되는 또다른 SQL문
+	
+*서브쿼리의 위치에 따라 부르는 이름
+select절		스칼라 서브쿼리
+from절		인라인뷰
+where절		중첩 서브쿼리
+
+*동작방식에 따라 부르는 이름
+상관 서브쿼리		메인쿼리와 조건식이 필요한 경우
+비상관 서브쿼리		메인쿼리와 조건식이 필요없는 경우
+
+*반환하는 레코드의 수에 따라 부르는 이름
+단일행 서브쿼리		서브쿼리의 결과가 1건인 경우
+다중행 서브쿼리		서브쿼리의 여러건인 경우
+
+
+-------------------------------------------------------------------------------------
+*스칼라 서브쿼리의 실습
+	=>select절에 서브쿼리가 오는 것
+	
+조인>	
+-고객번호별로 총구매액 출력
+select custid,sum(saleprice) from orders group by custid;
+
+-고객별로 총구매액 출력
+	고객번호,고객이름,총구매액 출력
+select c.custid,name,sum(saleprice)
+from customer c,orders o
+where c.custid = o.custid
+group by c.custid,name;
+
+스칼라서브쿼리>
+select custid,sum(saleprice)
+from orders
+group by custid;
+
+select custid,(select name from customer c where c.custid=o.custid) name,sum(saleprice)
+from orders o
+group by custid;
+
+->해당하는 custid만 가져오기 위해서 스칼라 서브쿼리에서 상관관계 해줘야 함
+
+
+
+-실습을 위하여 orders테이블에 bookname 속성 추가
+alter table orders add bookname varchar2(40);
+
+book테이블에 bookid와 동일한 bookname으로 orders테이블의 bookname을 수정하기
+update orders o set bookname=(select bookname from book b where o.bookid = b.bookid);
+(스칼라,상관 서브쿼리)
+
+*인라인 뷰 
+	=>from절에 오는 서브쿼리
+		from절에는 원래 테이블이름이 와야 하는데
+		검색한 결과를 가상의 태이블로 보고 사용한다고 해서
+		인라인 뷰
+		
+연습)고객번호가 2이하인 고객의 이름과 총판매액 출력
+조인>
+select name,sum(saleprice)
+from customer c,orders o
+where c.custid=o.custid and
+c.custid<=2
+group by name;
+
+인라인서브쿼리>
+select name,sum(saleprice)
+from (select custid,name from customer where custid<=2) c,orders o
+where c.custid=o.custid 
+group by name;
+
+
+*중첩서브쿼리
+	=>서브쿼리가 where절 조건식에 오는 경우
+	
+	이때에는 서브쿼리의 건수가 단일행인지 아닌지에 따라
+		단일행 연산자,다중행 연산자를 구분하여 사용해야 함
+		
+	=,>,<,>=,<=,!=
+		이러한 연산자는 서브쿼리의 건수가 단일행 일 때만 사용할 수 있음
+		
+	서브쿼리의 건수가 다중행일 때는 
+		=대신에 in을 써야하고,
+		!=대신에 not in을 써야하고,
+		>,<,>=,<=는 다중행 연산자인 any(some),all과 같이 사용해야 함,
+		또, 서브쿼리 건수가 있는지 없는지만 판단하려면 exists,not exists 사용
+		
+--------------------------------------------------------------------------------------
+연습)평균 주문금액 이하의 주문에 대하여 주문번호와 주문금액 출력
+select orderid,saleprice
+from orders
+where saleprice <= (select avg(saleprice) from orders);
+
+연습)각 고객의 평균 주문금액보다 큰 금액의 주문내역에 대하여 주문번호,고객번호,주문금액 출력
+select orderid,custid,saleprice 
+from orders o1
+where saleprice >= (select avg(saleprice) from orders o2 where o1.custid = o2.custid)
+order by custid;
+
+select custid,avg(saleprice) from orders group by custid order by custid;
+
+상관 서브쿼리 : 해당하는 것들만 할 때
+
+------------------------------------------------------------------------------
+
+**중첩서브쿼리의 결과가 다중행일 때의 실습
+	단일행 연산자를 사용할 수 없으며
+	다중행 연산자 in,not in,any(some),all을 사용해야 함
+	
+연습)대한민국에 거주하는 고객에세 판매한 도서의 총판매액 출력	
+select sum(saleprice) from orders
+where custid = (select custid from customer where address like '%대한민국%');
+
+2행에 오류:
+ORA-01427: 단일 행 하위 질의에 2개 이상의 행이 리턴되었습니다.
+
+==> 서브쿼리의 건수가 여러건일 때는 다중행 연산자를 사용해야 함
+
+select sum(saleprice) from orders
+where custid in (select custid from customer where address like '%대한민국%');
+
+
+
+연습)박지성이 구매하지 않은 도서의 정보 출력
+
+select * from book
+where bookid not in (select bookid from orders where custid 
+						= (select custid from customer where name='박지성'));
+
+
+연습)박지성이 구매한 도서와 동일한 도서를 구매한 고객의 정보 출력
+
+select bookid from orders where custid 
+		= (select custid from customer where name='박지성');
+
+select distinct custid from orders
+where bookid in (select bookid from orders where custid 
+		= (select custid from customer where name='박지성'));
+
+select * from customer 
+where custid in (select distinct custid from orders
+where bookid in (select bookid from orders where custid 
+		= (select custid from customer where name='박지성'))) and
+		name != '박지성';
+(박지성 제외)
+
+
+
+insert into orders values(19,3,1,10000,sysdate,null);
+insert into orders values(20,3,2,10000,sysdate,null);
+insert into orders values(21,3,2,10000,sysdate,null);
+insert into orders values(22,3,13,10000,sysdate,null);
+insert into orders values(23,2,1,10000,sysdate,null);
+insert into orders values(24,2,3,10000,sysdate,null);
+insert into orders values(25,6,1,10000,sysdate,null);
+
+
+
+연습)박지성 고객과 동일한 도서를 가장 많이 구매한 한 사람의 고객번호 출력
+
+-박지성 고객이 구매한 도서번호
+select bookid from orders where custid = (select custid from customer where name='박지성');
+
+BOOKID
+------
+     1
+     3
+     2
+    13
+    14
+
+=>위의 도서를 구매한 고객들의 고객별 구매건수 출력
+SQL> select custid,count(bookid)
+  2  from orders
+  3  where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성'));
+select custid,count(bookid)
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다
+
+
+select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid;
+
+CUSTID COUNT(BOOKID)
+------ -------------
+     3             4
+     2             2
+     6             2
+
+select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc;
+
+CUSTID COUNT(BOOKID)
+------ -------------
+     3             4
+     6             2
+     2             2
+
+==> 위의 결과에 rownum을 붙여서 rownum이 1인 행의 custid를 출력
+
+
+*rownum*
+
+select custid
+from ()
+where rownum = 1;					=>큰 틀
+(order by한 것은 where에 못 씀)
+
+
+select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1;
+
+CUSTID
+------
+     3
+
+*max*
+select max(count(bookid))
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid;								=>A
+
+MAX(COUNT(BOOKID))
+------------------
+                 4
+
+select custid,count(bookid) cnt
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc;					=>B
+
+
+
+B중에서 B의 cnt가 A인 custid를 검색
+
+select custid from (select custid,count(bookid) cnt
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where cnt = (select max(count(bookid))
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid);
+
+CUSTID
+------
+     3
+
+--------------------------------------------------------------------------------------------------------
+
+연습)박지성이 구매한 도서와 동일한 도서를 가장 많이 구매한
+		고객이 구매한 도서중에 박지성이 구매하지 않은 도서정보 출력 
+select bookid from orders
+where custid = (select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1);
+
+BOOKID
+------
+     6
+    10
+     8
+     1
+     2
+     2
+    13
+    
+===>위의 도서번호 중에서 박지성이 구매하지 않은 도서번호 출력
+select bookid from (select bookid from orders
+where custid = (select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1))
+where bookid not in (select bookid from orders where custid = (select custid from customer where name='박지성'));
+
+BOOKID
+------
+     6
+     8
+    10
+
+
+select * from book 
+where bookid in (select bookid from (select bookid from orders
+where custid = (select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1))
+where bookid not in (select bookid from orders where custid = (select custid from customer where name='박지성')));
+
+BOOKID BOOKNAME             PUBLISHER     PRICE
+------ -------------------- ---------- --------
+     6 역도 단계별기술      굿스포츠      6,000
+    10 Olympic Champions    Pearson      13,000
+     8 야구를 부탁해        이상미디어   14,000
+
+
+-------------------------------------------------------------------------------------------------------
+****minus연산자,union연산자
+select ~~~
+minus
+select ~~~
+
+select ~~~
+union
+select ~~~
+
+----------------------------------------------------------------------
+
+박지성과 구매성향이 가장 비슷한 사람의 구매목록
+minus
+박지성의 구매목록
+
+
+select bookid from orders
+where custid = (select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1)
+minus
+select bookid from orders where custid = (select custid from customer where name='박지성');
+
+BOOKID
+------
+     6
+    10
+     8
+
+select * from book
+where bookid in (select bookid from orders
+where custid = (select custid
+from (select custid,count(bookid)
+from orders 
+where bookid in (select bookid from orders where custid = (select custid from customer where name='박지성')) and
+custid != (select custid from customer where name='박지성')
+group by custid
+order by count(bookid) desc)
+where rownum = 1)
+minus
+select bookid from orders where custid = (select custid from customer where name='박지성'));
+
+BOOKID BOOKNAME             PUBLISHER     PRICE
+------ -------------------- ---------- --------
+     6 역도 단계별기술      굿스포츠      6,000
+     8 야구를 부탁해        이상미디어   14,000
+    10 Olympic Champions    Pearson      13,000
+
+
+
+--------------------------------------------------------------------------------------------------------
+-'박지성'고객에게 어떤 도서를 추천할까?
+	==>박지성과 동일한 도서를 가장 많이 구매한 사람의 구매도서중에서
+		박지성이 구매하지 않은 도서 출력
+		
+1) 박지성이 구매한 도서목록
+		=>A
+		
+2) A를 구매한 사람들의 고객번호별로 구매건수를 기준으로 내림차순 정렬하여 맨 첫번째 줄의 고객번호 출력
+		=>B
+		
+3) B가 구매한 도서번호 중에 박지성이 구매하지 않은 도서번호 출력
+		=>C
+		
+4) 도서번호가 C에 해당하는 도서정보 출력
+
+
+----------------------------------------------------------------------------------------------------
+1) 박지성이 구매한 도서목록
+		=>A
+	select bookid from orders where custid = (select custid from customer where name = '박지성');	
+	
+		
+2) A를 구매한 사람들의 고객번호별로 구매건수를 기준으로 내림차순 정렬하여 맨 첫번째 줄의 고객번호 출력
+		=>B
+		
+	select custid,count(bookid) 
+	from orders
+	where bookid in (select bookid from orders where custid = (select custid from customer where name = '박지성'))
+	and custid != (select custid from customer where name = '박지성')
+	group by custid
+	order by count(bookid) desc;
+	
+	select custid from ()
+	where rownum = 1;
+	
+	
+	select custid from (select custid,count(bookid) 
+	from orders
+	where bookid in (select bookid from orders where custid = (select custid from customer where name = '박지성'))
+	and custid != (select custid from customer where name = '박지성')
+	group by custid
+	order by count(bookid) desc)
+	where rownum = 1;
+	
+		
+3) B가 구매한 도서번호 중에 박지성이 구매하지 않은 도서번호 출력
+		=>C
+	select bookid 
+	from orders
+	where custid = ()
+	minus
+	where bookid in ();
+	
+	
+	select bookid from 
+	orders
+	where custid = (select custid from(
+	select custid, count(bookid) 
+	from orders 
+	where bookid in (select bookid from orders where custid = (select custid from customer where name = '박지성'))
+	and custid != (select custid from customer where name = '박지성')
+	group by custid
+	order by count(bookid) desc) where rownum = 1)
+	minus
+	select bookid from orders where custid = (select custid from customer where name = '박지성');
+		
+4) 도서번호가 C에 해당하는 도서정보 출력
+	
+	select * from book
+	where bookid in (select bookid from 
+		orders
+		where custid = (select custid from(
+		select custid, count(bookid) 
+		from orders 
+		where bookid in (select bookid from orders where custid = (select custid from customer where name = '박지성'))
+		and custid != (select custid from customer where name = '박지성')
+		group by custid
+		order by count(bookid) desc) where rownum = 1)
+		minus
+		select bookid from orders where custid = (select custid from customer where name = '박지성'));
+
+
+
+
+----------------------------------------------------------------------------
+
+-가장 잘 팔리는 책 한권 출력
+
+select bookid from(
+select bookid,count(bookid)
+from orders
+group by bookid
+order by count(bookid) desc)
+where rownum<=3;
+
+BOOKID
+------
+     1
+     2
+     8
+
+-------------------------------------------------------------------------------
+
+-신입회원 책 추천
+
+select * from book 
+where bookid in (
+select bookid from 
+			orders
+			where custid = (select custid from(
+			select custid, count(bookid) 
+			from orders 
+			where bookid in (select bookid from orders where custid = (select custid from customer where name = '김연아'))
+			and custid != (select custid from customer where name = '김연아')
+			group by custid
+			order by count(bookid) desc) where rownum = 1)
+			union
+			select bookid from (
+			select bookid, count(bookid)
+			from orders 
+			group by bookid
+			order by count(bookid) desc)
+			where rownum <= 3
+			minus
+			select bookid from orders where custid = (select custid from customer where name = '김연아'));
+
+
+
+
+
+
+---------------------------------------------------------------------------------------
+팀별연습문제) 고객이름을 입력받아 
+그 고객에게 추천할 도서를 출력하는 웹 문서를 작성합니다.
+
+select * from book
+	where bookid in (select bookid from 
+		orders
+		where custid = (select custid from(
+		select custid, count(bookid) 
+		from orders 
+		where bookid in (select bookid from orders where custid = (select custid from customer where name = ?))
+		and custid != (select custid from customer where name = ?)
+		group by custid
+		order by count(bookid) desc) where rownum = 1)
+		minus
+		select bookid from orders where custid = (select custid from customer where name = ?))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
