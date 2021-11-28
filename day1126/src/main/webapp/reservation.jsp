@@ -47,6 +47,7 @@
   			}
   		%>
   	</select><br>
+  	reservation_no:<input type="number" name="reservation_no">
   	customer_no:<input type="number" name="customer_no"><br>
   	check_in:<input type="date" name="checkin"><br>
   	check_out:<input type="date" name="checkout"><br>
