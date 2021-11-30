@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>게시물 등록</h2>
+	<hr>
+	<form action="insertBoardOK.jsp" method="post">
+		게시물번호 : <input type="number" name="no"><br>
+		작성자이름 : <input type="text" name="name"><br>
+		작성자이메일 : <input type="email" name="email"><br>
+		글제목 : <input type="text" name="title"><br>
+		글암호 : <input type="text" name="pwd"><br>
+		글내용 : <br><textarea rows="5" cols="60" name="content"></textarea><br>
+		카테고리 : <select name=category >
+					<option value="공지사항">공지사항</option>
+					<option value="자유게시판">자유게시판</option>
+					<option value="묻고답하기">묻고답하기</option>
+				</select><br>
+		<input type="submit" value="등록">
+		<input type="reset" value="취소">
+	</form>
+</body>
+</html>
