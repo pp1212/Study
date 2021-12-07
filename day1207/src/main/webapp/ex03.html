@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	/*1)container의 가로 500으로 하고 가운데에 배치
+	  2)photo에는 임의의 테두리 설정
+	  3)phoro에 마우스 올라가면 둥근테두리로 바꾸고 20도 회전*/
+
+	.container{
+		width: 500px;
+		margin: 50px auto;
+	}
+	
+	.photo{
+		border: 3px solid pink;
+	}
+	
+	.photo:hover{
+		border: 3px solid blue;
+		border-radius: 20px;
+		transform: rotate(20deg);
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<img src="images/coffee.jpg" class="photo">
+	</div>
+</body>
+</html>

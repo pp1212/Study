@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+/*1)박스의 가로,세로 크기를 100으로 설정
+	배경색은 초록색, 검정색 실선의 둥근 테두리로 설정
+  2)박스위에 마우스가 올라가면 점점 더 박스의 색상이 
+    노란색이 되도록 변형*/	
+	.box{
+		width: 100px;
+		height: 100px;
+		background: green;
+		border: 1px solid black;
+		border-radius: 10px;
+		transition: 1s;
+	}
+	
+	/*첫번째 방법*/
+	.box:hover{
+		background-color: yellow;
+	}
+	
+	
+</style>
+</head>
+<body>
+	<div class="box"></div>
+</body>
+</html>

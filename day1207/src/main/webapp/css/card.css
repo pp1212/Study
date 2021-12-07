@@ -1,0 +1,122 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;		
+}
+
+body{
+	background: rgb(9,100,160);
+}
+
+#container{
+	width: 320px;
+	margin: 50px auto;
+}
+
+.card{
+	position: relative;
+	width: 300px;
+	height: 500px;
+	margin: 20px 10px;
+	border: 1px solid #0f0f0f;
+	background-color: #ffffff;
+}
+
+.words{
+	position: absolute;
+	left: 10px;
+	top: 300px;
+	padding: 10px;
+	text-align: center;
+}
+
+/*
+	다음의 조건을 만족하는 미디어 쿼리의 중단점을 추가한 후 
+	크롬의 개발자 도구에서 결과를 확인 해 봅니다.
+	
+	- 태블릿에서는 카드의 이미지와 word를 한줄에 표시하도록 합니다.
+			
+	- pc에서는 3장의 카드 모두 한줄에 표시하도록 합니다.	
+
+
+	** 반응형 웹을 위한 css를 설정할 때는 
+		- 모바일 버전을 먼저 만들고
+		- 그것을 다 포함하고 태블릿 버전을 만들고
+		- 태블릿 버전을 다 포함하고 pc용 버전을 만듭니다.
+
+*/
+
+
+
+@media screen and (min-width:768px) and (max-width:1719px){
+	
+	/*컨테이너의 가로폭을 이미지와 글자를 표현할 수 있을만큼 크게 설정*/
+	#container{
+		width: 570px;
+		margin: 50px auto;
+	}
+	
+	.card{
+		position: relative;
+		width: 550px;
+		height: 250px;
+		margin: 20px 10px;
+		border: 1px solid #0f0f0f;
+		background-color: #ffffff;
+	}
+	
+	.words{
+		position: absolute;		/*카드 안에 포함됨,절대 위치*/
+		left: 310px;
+		top: 50px;
+		text-align: center;
+		width: 200px;
+	}
+}
+
+
+@media screen and (min-width:1720px){
+	
+	/*컨테이너의 가로폭을 카드3개를 표현할 수 있을만큼 크게 설정*/
+	#container{
+		width: 1710px;
+		margin: 50px auto;
+	}
+	
+	.card{
+		position: relative;
+		width: 550px;
+		height: 250px;
+		margin: 20px 10px;
+		border: 1px solid #0f0f0f;
+		background-color: #ffffff;
+		float: left;
+	}
+	
+	.words{
+		position: absolute;		/*카드 안에 포함됨,절대 위치*/
+		left: 310px;			/*이미지가 300px니까 310부터*/
+		top: 50px;
+		text-align: center;
+		width: 200px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
