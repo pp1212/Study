@@ -4,7 +4,7 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style type="text/css">
-/*1)photo의 위쪽 바깥쪽 여백을 50, 왼쪽 바깥쪽 여백 100 설정
+/*1)photo의 위쪽 바깥 여백을 50, 왼쪽 바깥 여백 100 설정
   2)photo에 마우스가 올라가면 1.5배 커지도록 하고
     테두리에 그림자를 설정(이때 변형의 기준이 왼쪽 위)*/
     
@@ -14,10 +14,10 @@
     }
     
     .photo:hover{
+    	transform-origin: left top;
     	transform: scale(1.5);
     	box-shadow: 5px 5px 3px black;
     	transition: 2s;
-    	transform-origin: left top;
     }
 </style>
 </head>
