@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="css/menu.css">
+<title>Insert title here</title>
+<!-- 다음의 지시사항을 따르는 외부 css를 작성하고 설정
+1. 모든 요소의 바깥여백, 안쪽여백을 0으로 설정
+	모든 요소의 크기를 테두리까지의 크기로 설정
+2. container의 가로 크기를 부모에 가득 차도록 함
+3. header의 가로 크기를 부모에 가득 차도록 함
+4. header 안에 있는 h1의 글자크기를 부모 글자의 3배 크기로 설정하고		-> 후손 header h1
+		가운데 정렬
+5. menus의 가로길이는 부모에 가득 차도록 함 
+6. menus의 자식인 div들은										-> 자식 header > div
+		상대위치로 설정하고 
+		세로길이를 400으로 설정하고 
+		아래 바깥쪽 여백을 15로 설정하고
+		테두리를 칠함
+7. 모든 메뉴들은 부모에 가득 차도록 함
+8. menus 안에 있는 h2는 
+		절대위치로 하며
+		안쪽여백을 5
+		글자크기는 부모의 2배 글자색은 흰색 글자에 검은색의 그림자 설정
+		위치는 부모의 오른쪽 아래에 오도록 함
+9. 각각의 메뉴에 대하여 배경이미지를 설정
+	menu1==> dish1.jpg,... 
+----------------------------------------------------------------
+미디어쿼리와 플렉서블 박스를 이용하여
+	태블릿과 pc를 위한 css를 설정
+	
+- 태블릿
+	한 줄에 메뉴를 2개씩 보이도록 함
+	정렬방식은 양 끝에는 공백이 없도록 균등하게 배분
+	
+	짝이 맞지 않는 마지막 메뉴는 가로길이를 부모에 가득차도록 함
+
+- pc
+	한 줄에 메뉴를 3개씩 보이도록 함
+	짝이 맞지 않는 마지막 메뉴를 2배 크게 확대
+
+-->
+
+</head>
+<body>
+	<div id="container">
+		<header>
+			<h1>솔로의 식탁</h1>
+		</header>
+		<section id="menus">
+			<div id="menu1">
+				<h2>밥/죽</h2>
+			</div>
+			<div id="menu2">
+				<h2>국/찌개</h2>
+			</div>
+			<div id="menu3">
+				<h2>반찬</h2>
+			</div>
+			<div id="menu4">
+				<h2>일품요리</h2>
+			</div>
+			<div id="menu5">
+				<h2>음료/칵테일</h2>
+			</div>
+		</section>
+		<footer>
+			<p>솔로의 식탁</p>
+		</footer>
+	</div>
+</body>
+</html>
