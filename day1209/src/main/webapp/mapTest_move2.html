@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=567802d7cf855d5e41304d790e17a036"></script>
+<script type="text/javascript">
+	
+	window.onload = function(){
+		var mapContainer = document.getElementById("map");
+		var center = new kakao.maps.LatLng(33.450701,126.570667);
+		var mapOption = {
+				center: center,
+				level:3
+		}
+		var map = new kakao.maps.Map(mapContainer,mapOption);
+		var marker = new kakao.maps.Marker({
+			position: center
+		});
+		marker.setMap(map);
+		
+		var btnMove = document.getElementById("btnMove");
+		btnMove.onclick = function(){
+			var newPosition = new kakao.maps.LatLng(37.55676371748416, 126.91955932697181);
+			//map.setCenter(newPosition);
+			map.panTo(newPosition);
+			var marker = new kakao.maps.Marker({
+				position: newPosition
+			});
+			marker.setMap(map);
+		}
+	};
+	
+</script>
+</head>
+<body>
+	<div id="map" style="width: 100%;height: 500px"></div>
+	<button id="btnMove">쌍용교육센터로 이동하기</button>
+</body>
+</html>

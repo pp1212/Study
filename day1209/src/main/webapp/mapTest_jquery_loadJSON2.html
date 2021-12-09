@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=567802d7cf855d5e41304d790e17a036"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		//내가 만든 마커 이미지
+		//var imageSrc = "images/marker.png"; 
+		
+		//미리 지도가 만들어져야 함
+		var mapContainer = document.getElementById("map");
+		var mapOPtion = {
+				center: new kakao.maps.LatLng(37.55676371748416, 126.91955932697181),
+				level: 3
+		}
+		var map = new kakao.maps.Map(mapContainer,mapOPtion);
+		
+		//카카오가 제공하는 마커 이미지
+		var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+		
+		$.getJSON("전국야영(캠핑)장표준데이터.json", function(data){
+			var arr = data['records'];
+			for(var i=0; i<arr.length; i++){
+				var name = arr[i]['야영(캠핑)장명'];
+				var addr = arr[i]['소재지도로명주소'];
+				var lat = arr[i]['위도'];				//이미 배열에서 꺼내서 lat에 담음
+				var lng = arr[i]['경도'];
+				//console.log(name+"/"+addr+"/"+lat+"/"+lng);
+				
+				/*이건 내가 한 것
+				var imageSize = new kakao.maps.Size(20,20);
+				var markerImage = new kakao.maps.MarkerImage(imageSrc,imageSize);
+				var marker = new kakao.maps.Marker({
+					map: map,
+					position: new kakao.maps.LatLng(lat, lng),
+					title: name,
+					image: markerImage
+				});
+				*/
+				
+				// 마커 이미지의 이미지 크기 입니다
+			    var imageSize = new kakao.maps.Size(24, 35); 
+			    
+			    // 마커 이미지를 생성합니다    
+			    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+			    
+			    // 마커를 생성합니다
+			    var marker = new kakao.maps.Marker({
+			        map: map, // 마커를 표시할 지도
+			        position: new kakao.maps.LatLng(lat, lng), // 마커를 표시할 위치
+			        title : name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+			        image : markerImage // 마커 이미지 
+			    });
+				
+			}
+
+		});	
+		
+		
+		
+		
+	});
+</script>
+</head>
+<body>
+	<div id="map" style="width: 100%;height: 500px;"></div>
+</body>
+</html>
