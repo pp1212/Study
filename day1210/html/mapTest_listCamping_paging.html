@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+
+<style type="text/css">
+	span{
+		display: inline-block;
+		margin: 5px;
+		cursor: pointer;
+	}
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=567802d7cf855d5e41304d790e17a036"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };
+
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption); 
+		
+		
+		var pageSize = 10;		//한 화면에 20개씩 보여주고 싶음
+		var totalRecord;		//전체 레코드 수를 담기 위한 변수
+		var totalPage;			//전체 페이지수를 담기 위한 변수
+		var arr;				//전체 데이터를 담기 위한 배열
+		
+		var pageGroup = 10;		//한 화면에 보여줄 페이지의 수를 10개씩
+		
+		var oldMarker = new kakao.maps.Marker({
+	        position: new kakao.maps.LatLng(33.450701, 126.570667)
+	    });
+		
+		$.getJSON("전국야영(캠핑)장표준데이터.json", function(data){
+			//console.log(data);  -> Object에 fields랑 records가 나오는데 records가 우리가 필요한 값이 있음
+			arr = data['records'];
+			totalRecord = arr.length;
+			totalPage = Math.ceil(totalRecord / pageSize);
+			console.log(totalPage);
+			printPageNumber(1);
+			printPage(1);
+			
+			
+		});//end getJSON
+		
+		
+		//현재 페이지의 캠핑장 목록 출력하기
+		function printPage(page){
+			
+			$("#list").empty();	//모든 내용 지움
+			
+			//page가 1이면 보여줘야 할 시작레코드의 인덱스가 0, 마지막 인덱스 9
+			//		2이면							10			  19
+			//한 화면에 보여주는 페이지 10개라면
+			var start = (page-1)*pageSize;
+						//(1 - 1)*10    -> 1
+			var end = start + pageSize - 1;
+						//1 + 10       - 1 -> 10
+			
+			console.log("시작페이지",start);			
+			console.log("마지막페이지",end);	
+			//console.log(arr.length);
+						
+			//캠핑장 목록 출력하기
+			
+			for(var i=start; i<=end; i++){
+				var row = arr[i];
+				var name = row['야영(캠핑)장명'];
+				var addr = row['소재지도로명주소'];
+				var lat = row['위도'];
+				var lng = row['경도'];
+				var td1 = $("<td></td>").html(name);
+				var td2 = $("<td></td>").html(addr);
+				var td3 = $("<td></td>").html(lat);
+				var td4 = $("<td></td>").html(lng);
+				var tr = $("<tr></tr>").addClass("item");
+				$(tr).attr("index",i);
+				$(tr).append(td1,td2,td3,td4);
+				$("#list").append(tr);				
+			}
+		}
+		
+		
+		
+		//함수 만드는 법,페이지 번호 출력하기
+		function printPageNumber(page){
+			
+			//paging에 있는 모든 자식 노드(태그)들을 지워줌
+			$("#paging").empty();
+			
+						   //↓버림
+			var startPage = Math.floor((page-1)/pageGroup) * pageGroup + 1; 
+			var endPage = startPage + pageGroup - 1;
+			
+			//마지막 페이지는 전체페이지를 넘지 않도록 함
+			if(endPage > totalPage){
+				endPage = totalPage;
+			}
+			
+			if(startPage > 1){								  //↓속성 부여(밑에 줄이랑 같음)
+				var span = $("<span></span>").html("[이전]"); //.attr("page",startPage-1);
+				$(span).attr("page",startPage-1);
+				$("#paging").append(span);
+			}
+			
+			
+			//페이지번호 출력하기
+			for(var i=startPage;i<=endPage; i++){		  
+				var span = $("<span></span>").html(i);  
+				$(span).attr("page",i);
+				$("#paging").append(span);
+			}
+			
+			if(endPage < totalPage){
+				var span = $("<span></span>").html("[다음]");
+				$(span).attr("page",endPage+1);
+				$("#paging").append(span);
+			}
+		}
+		
+		//페이지 번호를 담고 있는 span태그가 눌러졌을 때의 처리
+		$(document).on("click","span", function(){
+			var page = $(this).attr("page");
+			printPageNumber(page);
+			printPage(page);
+		});
+		
+		
+		$(document).on("click", ".item", function(){
+			var index = $(this).attr("index");
+			var item = arr[index];
+			var lat = item['위도'];
+			var lng = item['경도'];
+			console.log(lat,lng);
+			
+			
+		    var moveLatLon = new kakao.maps.LatLng(lat,lng);
+		    map.panTo(moveLatLon); 
+		    
+		   
+		    var marker = new kakao.maps.Marker({
+		        position: moveLatLon
+		    });
+		    
+		 	//oldMarker를 화면에서 제거
+		 	oldMarker.setMap(null);
+		    
+		 	//현재 marker를 표시
+		    marker.setMap(map);
+		 	
+		 	//다음에 표시될 marker를 위하여 현재 marker를 oldMarker에 담아 둠
+		 	oldMarker = marker;
+			
+		});
+		
+		
+		
+	});
+</script>
+</head>
+<body>
+	<div id="paging"></div>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>캠핑장이름</th>
+				<th>주소</th>
+				<th>위도</th>
+				<th>경도</th>
+			</tr>
+		</thead>
+		<tbody id="list">
+			
+		</tbody>
+	</table>
+	<div id="map" style="width: 100%;height: 500px;"></div>
+</body>
+</html>
