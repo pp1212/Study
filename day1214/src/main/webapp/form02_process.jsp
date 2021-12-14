@@ -10,7 +10,7 @@
 	<%
 		request.setCharacterEncoding("utf-8");
 	%>
-	<jsp:useBean id="m" class="com.sist.vo.Member" />
+	<jsp:useBean id="m" class="com.sist.vo.MemberVO" />
 	<jsp:setProperty property="*" name="m"/>
 	
 	

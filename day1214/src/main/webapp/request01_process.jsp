@@ -18,7 +18,7 @@
 취미 : 
 <%
 	for(String h:hobby){
-		out.println(h + "");
+		out.println(h + " ");
 	}
 %>
 </body>

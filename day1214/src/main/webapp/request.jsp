@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	POST 방식,<br>
+	POST 방식<br>
 	<form action="process.jsp" method="post">
 		이름 : <input type="text" name="name">
 		<input type="submit" value="전송">
@@ -15,7 +15,7 @@
 	<hr>
 	
 	GET방식
-	<form action="process.jsp" method="post">
+	<form action="process.jsp">
 		이름 : <input type="text" name="name">
 		<input type="submit" value="전송">
 	</form>
