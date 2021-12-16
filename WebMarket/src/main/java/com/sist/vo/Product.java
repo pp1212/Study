@@ -3,7 +3,7 @@ package com.sist.vo;
 public class Product {
 	private String productId;			//상품아이디
 	private String pname;				//상품명
-	private int unitPrice;				//상품 가격
+	private double unitPrice;			//상품 가격
 	private String description;			//상품 설명
 	private String manufacturer;		//제조사
 	private String category;			//분류
@@ -29,10 +29,10 @@ public class Product {
 	public void setPname(String pname) {
 		this.pname = pname;
 	}
-	public int getUnitPrice() {
+	public double getUnitPrice() {
 		return unitPrice;
 	}
-	public void setUnitPrice(int unitPrice) {
+	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
 	public String getDescription() {
@@ -65,8 +65,8 @@ public class Product {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
-	public Product(String productId, String pname, int unitPrice, String description, String manufacturer,
-			String category, int unitInStock, String condition) {
+	public Product(String productId, String pname, double unitPrice, String description, String manufacturer,
+			String category, int unitInStock, String condition, String filename) {
 		super();
 		this.productId = productId;
 		this.pname = pname;
@@ -76,16 +76,18 @@ public class Product {
 		this.category = category;
 		this.unitInStock = unitInStock;
 		this.condition = condition;
+		this.filename = filename;
 	}
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Product(String productId, String pname, int unitPrice) {
+	public Product(String productId, String pname, double unitPrice) {
 		super();
 		this.productId = productId;
 		this.pname = pname;
 		this.unitPrice = unitPrice;
 	}
+	
 	
 }

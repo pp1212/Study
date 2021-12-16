@@ -22,6 +22,7 @@
 </head>
 <body>
 
+
 	<%
 		ProductRepository dao = ProductRepository.getInstance();
 		ArrayList<Product> list = dao.getAllProducts();
@@ -40,11 +41,11 @@
 				for(Product p :list){
 					%>
 						<div class="col-md-4">
-							<img src="images/<%=p.getFilename()%>" style="width: 100%;">
+							<img src="resources/images/<%=p.getFilename()%>" style="width: 100%;">
 							<h3><%= p.getPname() %> </h3>
 							<p><%= p.getDescription() %> </p>
 							<p><%= p.getUnitPrice() %>원 </p>
-							<p><a role="button" class="btn btn-secondary" href="product.jsp?id=<%=p.getProductId()%>">상세정보 &raquo;</a></p>
+							<p><a role="button" class="btn btn-secondary" href="product.jsp?id=<%=p.getProductId()%>">상세 정보 &raquo;</a></p>
 						</div>
 					<%
 				}

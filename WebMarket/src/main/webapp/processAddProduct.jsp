@@ -13,13 +13,13 @@
 <body>
 <%
 	request.setCharacterEncoding("utf-8");
-	String path = request.getRealPath("images");
+	String path = request.getRealPath("resources/images");
 	MultipartRequest multi = new MultipartRequest(request, path, 1024*1024*5, "utf-8", new DefaultFileRenamePolicy());
 	
 
 	String productId = multi.getParameter("productId");
 	String name = multi.getParameter("name");
-	int unitPrice = Integer.parseInt(multi.getParameter("unitPrice"));
+	double unitPrice = Double.parseDouble(multi.getParameter("unitPrice"));
 	String description = multi.getParameter("description");
 	String manufacturer = multi.getParameter("manufacturer");
 	String category = multi.getParameter("category");
