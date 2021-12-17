@@ -10,7 +10,14 @@ public class Product {
 	private int unitInStock;			//재고 수
 	private String condition;			//신상품 or 중고품 or 재생품
 	private String filename;			//이미지 파일명
+	private int quantity;				//장바구니에 담은 개수
 	
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	public String getFilename() {
 		return filename;
 	}
@@ -87,6 +94,12 @@ public class Product {
 		this.productId = productId;
 		this.pname = pname;
 		this.unitPrice = unitPrice;
+	}
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", pname=" + pname + ", unitPrice=" + unitPrice + ", description="
+				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitInStock="
+				+ unitInStock + ", condition=" + condition + ", filename=" + filename + ", quantity=" + quantity + "]";
 	}
 	
 	
