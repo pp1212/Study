@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+	a = "100";
+	a1 = Number(a);
+	a2 = eval(a);
+	console.log(typeof(a));
+	console.log(typeof(a1));
+	console.log(typeof(a2));
+	console.log("---------------------------");
+	
+	b = 20;
+	b1 = String(b);
+	b2 = b+"";
+	console.log(typeof(b));
+	console.log(typeof(b1));
+	console.log(typeof(b2));
+	
+	console.log("---------------------------");
+	c = "true";
+	c1 = Boolean(c);
+	console.log(typeof(c));
+	console.log(typeof(c1));
+	console.log("---------------------------");
+	
+	d = true;
+	d1 = String(d);
+	console.log(typeof(d));
+	console.log(typeof(d1));
+	
+	
+	console.log("---------------------------");
+	e = true;
+	f = false;
+	e1 = Number(e);
+	f1 = Number(f);
+	console.log(e1);
+	console.log(f1);
+	
+	//boolean을 Number로 변환하면
+	//true  ==> 1
+	//flase ==> 0
+	
+	console.log("---------------------------");
+	
+	g = 100;
+	h = -2;
+	i = 0;
+	g1 = Boolean(g);
+	h1 = Boolean(h);
+	i1 = Boolean(i);
+	console.log(g1);
+	console.log(h1);
+	console.log(i1);
+	
+	//숫자를 Boolean으로 변환할 때에는 
+	//0이 아닌 값이 있는 상태는 true
+	//0일때에는 false
+	
+	console.log("---------------------------");
+	
+	j = "20";
+	k = "이십";
+	
+	j1 = Number(j);
+	k1 = Number(k);
+	console.log(j1);
+	console.log(k1);
+	//숫자로 변환할 수 없는 문자열을 Number함수를 이용하면 NaN가 출력됨.
+	
+	
+	//isNaN
+	//문자열 변수의 값이 
+	//숫자의 형태를 띄지 않는지 확인하는 함수입니다.
+	
+	l = "hello";
+	m = "200";
+	l1 = isNaN(l);
+	m1 = isNaN(m);
+	console.log(l1);
+	console.log(m1);
+	console.log(typeof(m));
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+</body>
+</html>

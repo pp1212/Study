@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+function pro(){
+	let arr = ["영","일","이","삼","사","오","육","칠","팔","구"];
+	let num = Number(document.getElementById("num").value);
+	console.log(num);
+	let result= arr[num] ;
+	document.getElementById("result").innerHTML = result;
+}
+</script>
+</head>
+<body>
+	수를 입력하세요==>
+	<input type="text" id="num">
+	<button onclick="pro()">확인</button>
+	<br>
+	결과 : <span id="result"></span>
+</body>
+</html>
+
+
+
+
+
+

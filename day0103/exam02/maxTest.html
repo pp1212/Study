@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function pro(){
+		let num1 = Number(document.getElementById("num1").value);
+		let num2 = Number(document.getElementById("num2").value);
+		
+		let max = (num1 > num2)?num1:num2;
+		document.getElementById("result").innerHTML = max;
+	}
+</script>
+</head>
+<body>
+	수1 : <input type="text" id="num1"><br>
+	수2 : <input type="text" id="num2"><br>
+	<button onclick="pro()">확인</button>
+	<br>
+	큰수 : <span id="result"></span>
+</body>
+</html>
