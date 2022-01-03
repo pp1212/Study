@@ -12,7 +12,7 @@
 	request.setCharacterEncoding("utf-8");
 	String to = request.getParameter("to");
 	String msg = request.getParameter("msg");
-	String from = "01025598279";
+	String from = "보내는 번호";
 	BitSms sms = new BitSms();
 	sms.sendMsg(from,to,msg);
 %>
