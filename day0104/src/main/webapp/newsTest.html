@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	let news = "안랩(053800)이 올해 운영기술(OT) 보안 사업에 본격 진출한다. 블록체인 신사업도 추진할 계획이다.";
+	
+	window.onload = ()=>{
+		let n = 1;
+		setInterval(()=>{
+			let data = news.substr(0,n++);
+			document.getElementById("result").innerHTML = data;
+			if(n >= news.length){
+				n = 1;
+			}
+		}, 200);
+	}
+	
+</script>
+</head>
+<body>
+	<div id="result"></div>
+</body>
+</html>

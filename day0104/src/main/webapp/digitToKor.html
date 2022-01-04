@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function pro() {
+		let num = Number(document.getElementById("num").value);
+		
+		tenDigit = parseInt(num / 10 + "");
+		oneDigit = num % 10;
+
+		arrTen = ["","십","이십","삼십","사십","오십","육십","칠십","팔십","구십"];
+		arrOne = ["","일","이","삼","사","오","육","칠","팔","구"];
+		
+		let kor = "";
+		if(num == 0){
+			kor = "영";
+		}else{
+			kor = arrTen[tenDigit] + arrOne[oneDigit];
+		}
+		
+		document.getElementById("result").innerHTML = kor;
+	}
+</script>
+</head>
+<body>
+	수를 입력하시오==>
+	<input type="text" id="num">
+	<button onclick="pro()">확인</button>
+	<hr>
+	결과 : <span id="result"></span>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/*
+	let hello = ()=>{
+		console.log("hello");
+	}
+*/	
+	let pro = ( k )=>{	//함수를 매개변수로 전달받음
+		for(i=1;i<=10;i++){
+			k();
+		}
+	}
+	/*
+	pro(function(){
+		console.log("hello");
+	});*/
+	
+	pro( ()=>{
+		console.log("hello");
+	} );
+</script>
+</head>
+<body>
+	
+</body>
+</html>

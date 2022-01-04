@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	let news = ["안랩(053800)이 올해 운영기술(OT) 보안 사업에 본격 진출한다. 블록체인 신사업도 추진할 계획이다.",
+				"싸이월드제트는 4일 오후 4시42분부터 '로그인 후 사진 3장 보기' 서비스를 시작한다고 발표했다.",
+				"스테이씨, 전소미, 엔하이픈 등 아티스트의 팬 이벤트가 메타버스에서 열린다.",
+				"삼성전자가 세계 최초로 대체불가능한토큰(NFT)을 구매하고 NFT와 연결된 콘텐츠를 감상할 수 있는 스마트TV를 시장에 선보인다. ",
+				"코로나19 재유행이 ‘CES2022’ 발목을 잡았다. CES는 세계 최대 정보통신기술(ICT) 전시회다. 오프라인 전시는 2년 만이다."];
+	
+	window.onload = ()=>{
+		let n = 1;	//배열에서 글자 의미
+		let i = 0;	//배열 개수
+		setInterval(()=>{
+			let data = news[i].substr(0,n++);
+			document.getElementById("result").innerHTML = data;
+			if(n >= news[i].length){
+				n = 1;
+				i++;
+			}
+			if(i>=news.length){
+				i=0;
+				n=1;
+			}
+		}, 30);
+	}
+	
+</script>
+</head>
+<body>
+	<div id="result"></div>
+</body>
+</html>

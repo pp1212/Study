@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function Member(name, age){
+		this.name = name;
+		this.age = age;
+	}
+	
+	Member.prototype.print = function(){
+		console.log(`${this.name}의 나이는 ${this.age}살 입니다.`);
+	}
+	/*
+	let members = [
+		new Member("홍길동",20),
+		new Member("이순신",21),
+		new Member("유관순",22),
+		new Member("김유신",23),
+		new Member("강감찬",24)
+	];*/
+	
+	let members = [];
+	members.push(new Member("홍길동",20));
+	members.push(new Member("이순신",30));
+	members.push(new Member("김길동",40));
+	members.push(new Member("박길동",50));
+	members.push(new Member("이길동",60));
+	
+	for(let i of members){
+		i.print();
+	}
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

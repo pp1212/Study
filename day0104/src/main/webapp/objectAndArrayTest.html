@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	let arr = ["홍길동",20,"서울"];
+	let member = {
+			name:"홍길동",
+			age:20,
+			addr:"서울"
+	}
+	/*
+	console.log(arr);
+	console.log(member);
+	console.log("---------------------------------");
+	for(let i in arr){		//인덱스
+		console.log(i+","+arr[i]);
+	}
+	console.log("---------------------------------");
+	for(let i in member){	//속성
+		console.log(i+","+member[i]);
+	}
+	*/
+	console.log("---------------------------------");
+	for(let i of arr){
+		console.log(i);
+	}
+	console.log("---------------------------------");
+	for(let i of member){		//객체는 for of 반복문 사용할 수 없음
+		console.log(i);
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>
