@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function checkDelete(){
+		let re = confirm("정말로 삭제하시겠어요?");	//예,아니오 단추 있음
+		if(re == true){
+			location.href = "goodsDelete.jsp";
+		}
+	}
+</script>
+</head>
+<body>
+	<a href="#" onclick="checkDelete()">삭제</a>
+</body>
+</html>

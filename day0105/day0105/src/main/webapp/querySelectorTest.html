@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		arr = document.querySelector("h1");		//h1태그가 여러개 있더라도 첫번째 요소만 반환
+		console.log(arr);
+		arr.style.backgroundColor = "pink";
+		
+		data = document.getElementsByTagName("h1");	//h1태그를 모두 반환,배열 반환,s 있음
+		console.log(data);
+		for(i=0;i<data.length;i++){
+			data[i].style.color = "blue";
+		}
+		//HTMLCollection(3) ==> forEach 함수 사용할 수 없음
+		//data.forEach(function(item,i){
+		//	item.style.color = "blue";
+		//});
+	}
+</script>
+</head>
+<body>
+	<h1>홍길동</h1>
+	<h2>서울</h2>
+	<h1>이순신</h1>
+	<h2>광주</h2>
+	<h1>유관순</h1>
+	<h2>대전</h2>
+</body>
+</html>

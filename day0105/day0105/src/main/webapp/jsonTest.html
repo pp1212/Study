@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+	let data = [
+		{name:"홍길동",age:20},
+		{name:"이순신",age:40}
+	];
+	
+	//배열도 object로 나옴
+	console.log(typeof data);
+	
+	let a = JSON.stringify(data);	//문자열로 변환
+	console.log(a);
+	console.log(typeof a);
+	
+	let arr = JSON.parse(a);		//자바스크립트로 변환(바꿀 것이 자바스크립트 형태이어야 함)
+	console.log(arr);
+	console.log(typeof arr);
+</script>
+</body>
+</html>

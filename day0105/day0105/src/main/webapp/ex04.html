@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script type="text/javascript">
+		let a = 53;
+		/*
+		a.pro = function(){
+			return "기본자료형입니다.";
+		}
+		
+		console.log(a.pro());*/
+		Number.prototype.pro = function(){
+			return "기본자료형입니다.";
+		}
+		
+		console.log(a.pro());
+	</script>
+</body>
+</html>
