@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function pro(){
+		var header = document.getElementById("header");
+		var originalValue = header.innerHTML;
+		header.innerHTML = "자바스크립트로 내용을 변경하였습니다.<br>";
+		header.innerHTML = header.innerHTML + "원래의 내용은 " + originalValue + "였습니다.";
+	}
+</script>
+</head>
+<body>
+	<h1 id="header">Hello</h1>
+	<button onclick="pro()">바꾸기</button>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var a = document.getElementById("a");
+		var b = document.getElementById("b");
+		a.onkeydown = function(e){
+			//b.value = a.value;
+			//엔터를 치면 a의 내용을 b로 복사하도록 함
+			if(e.keyCode == 13){
+				b.value = a.value;
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text" id="a"><br>
+	<input type="text" id="b"><br>
+</body>
+</html>

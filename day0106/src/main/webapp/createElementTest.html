@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		btn = document.getElementById("btn");
+		btn.onclick = function(){
+			var h1 = document.createElement("h1");	//h1태그 생성
+			var txt = document.createTextNode("hello");	//텍스트노드 생성
+			h1.appendChild(txt);						//h1태그에 텍스트노드 추가
+			var div = document.getElementById("div");	//div 선택
+			div.appendChild(h1);						//div에 h1태그(텍스트노드 추가된) 추가
+		}
+	}
+</script>
+</head>
+<body>
+	<div id="div"></div>
+	<button id="btn">노드추가</button>
+</body>
+</html>

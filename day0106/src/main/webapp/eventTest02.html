@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#div{
+		width: 600px;
+		height: 600px;
+		background: pink;
+	}
+	
+	#man{
+		position: absolute;
+		left: 200px;
+		top: 200px;
+	}
+</style>
+<script type="text/javascript">
+	window.onload = function (){
+		div = document.getElementById("div");
+		var man = document.getElementById("man");
+		div.onclick = function(e){
+			//console.log(e);
+			//alert(e.x + "," + e.y);
+			x = e.x;
+			y = e.y;
+			man.style.left = x + "px";
+			man.style.top = y + "px";
+		};
+	}
+</script>
+</head>
+<body>
+	<div id="div"><img src="man.png" id="man"></div>
+</body>
+</html>

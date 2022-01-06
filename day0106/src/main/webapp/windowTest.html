@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function pro() {
+		child = window.open("addr.html","","width=300,height=200");
+		/*
+		city = document.getElementById("city").value;	
+		setTimeout(function(){
+			child.document.getElementById("addr").value = city;
+		},500);*/
+		
+	}
+</script>
+</head>
+<body>
+	도시명 : <input type="text" id="city">
+	<button onclick="pro()">주소입력</button>
+	<hr>
+	주소 : <span id="addr"></span>
+</body>
+</html>

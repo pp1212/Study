@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	
+	window.onload = function(){
+		var btn = document.getElementById("btn");
+		btn.onclick = function(){
+			var request = new XMLHttpRequest();	//false:동기방식
+			request.open("get","hello.jsp",false);
+			request.send();
+			setTimeout(function(){
+				document.getElementById("result").innerHTML = request.responseText;
+			},1000);
+			
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text">
+	<hr>
+	결과 : <span id="result"></span>
+	<button id="btn">Ajax통신하기</button>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var image;
+	window.onload = function(){
+		image = document.getElementById("image");
+		image.src = "ball1.jpg";	
+		image.width = 200;
+		image.height = 200;
+		image.index = 1;
+		//.연산자로는 원래부터 있는 속성에만 접근 할 수 있음
+		//사용자가 원래는 없는데 임의의 속성을 설정하려면
+		//setAttribute함수를 이용해야 함
+	}
+	
+	function pro(fname){
+		image.src = fname;	
+	}
+</script>
+</head>
+<body>
+	<img id="image" src="">
+	<hr>
+	<button onclick="pro('ball1.jpg')">축구공</button>
+	<button onclick="pro('cloth1.jpg')">유니폼</button>
+	<button onclick="pro('shoe1.jpg')">축구화</button>
+	<button onclick="pro('stock1.jpg')">스타킹</button>
+</body>
+</html>

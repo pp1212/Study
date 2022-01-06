@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var headers = document.querySelectorAll("h1");
+		//document.getElementsByTagName("h1");			//위랑 같은 결과
+		
+		for(i = 0;i<headers.length;i++){
+			header = headers[i];
+			header.style.color = "orange";
+			header.style.backgroundColor = "black";
+			header.innerHTML = "이름없음";
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>홍길동</h1>
+	<h2>서울</h2>
+	
+	<h1>이순신</h1>
+	<h2>광주</h2>
+	
+	<h1>유관순</h1>
+	<h2>제주</h2>
+	
+</body>
+</html>

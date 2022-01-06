@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	#div{
+		width: 600px;
+		height: 600px;
+		background: pink;
+	}
+	
+	#man{
+		position: absolute;
+		left: 200px;
+		top: 200px;
+	}
+</style>
+<script type="text/javascript">
+	window.onload = function(){
+		var x = 200;
+		var y = 200;
+		var div = document.getElementById("div");
+		var man = document.getElementById("man");
+		div.focus();
+		div.onkeyup = function(e){
+			let code = e.keyCode;
+			//왼쪽:37 위:38 오른쪽:39 아래:40
+			
+			switch(code){
+				case 37:x -= 10;break;
+				case 38:y -= 10;break;
+				case 39:x += 10;break;
+				case 40:y += 10;break;
+			}
+			man.style.left = x + "px";
+			man.style.top = y + "px";
+		};
+	}
+	
+	
+</script>
+</head>
+<body>
+	<div id="div" tabindex="0"><img src="man.png" id="man"></div>
+</body>
+</html>

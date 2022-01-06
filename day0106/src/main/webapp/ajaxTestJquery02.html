@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){		//함수,매개변수로 콜백함수 전달해줌,=window.onload 같은 기능
+		$("#btn").click(function(){		//id가 btn인걸 찾아라,콜백함수 전달
+			$.ajax({url:"Hello",success:function(r){	//XML~객체 만들어서 ajax통신 연결했는데 이렇게만 하면 됨
+				  //↑{}객체 안에 써줌 
+				  $("#result").html(r);
+			}});
+		});
+	});	
+</script>
+</head>
+<body>
+	<input type="text">
+	<br>
+	결과 : <span id="result"></span>
+	<hr>
+	<button id="btn">Ajax통신</button>
+</body>
+</html>

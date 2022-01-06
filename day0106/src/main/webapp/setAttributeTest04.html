@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function setAttr(){
+		document.body.setAttribute("data-custom","value");		
+	}
+
+	function readAttr(){
+		data_custom = document.body.getAttribute("data-custom");
+		alert(data_custom);
+	}
+</script>
+</head>
+<body>
+	<button onclick="setAttr()">속성설정</button>
+	<button onclick="readAttr()">속성출력</button>
+</body>
+</html>

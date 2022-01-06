@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var btn = document.getElementById("btn");
+		btn.onclick = function(){
+			var request = new XMLHttpRequest();
+			request.open("get","Hello",false);
+			request.send();		//↑jsp,서블릿,스프링 서비스명 올 수 있음
+			document.getElementById("result").innerHTML = request.responseText;
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text"><br>
+	결과 : <span id="result"></span>
+	<hr>
+	<button id="btn">Ajax통신</button>
+</body>
+</html>

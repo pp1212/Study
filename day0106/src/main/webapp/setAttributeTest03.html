@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var image;
+	window.onload = function(){
+		image = document.getElementById("image");
+		/*image.src = "ball1.jpg";	
+		image.width = 200;
+		image.height = 200;*/
+		image.setAttribute("src","ball1.jpg");
+		image.setAttribute("width",200);
+		image.setAttribute("height",200);
+		//image.setAttribute("index",1);
+		
+	}
+	
+	function pro(fname){
+		//image.src = fname;	
+		image.setAttribute("src",fname);
+	}
+</script>
+</head>
+<body>
+	<img id="image" src="">
+	<hr>
+	<button onclick="pro('ball1.jpg')">축구공</button>
+	<button onclick="pro('cloth1.jpg')">유니폼</button>
+	<button onclick="pro('shoe1.jpg')">축구화</button>
+	<button onclick="pro('stock1.jpg')">스타킹</button>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var btn = document.getElementById("btn");
+		btn.onclick = function(){
+			var request = new XMLHttpRequest();
+			request.open("get","Hello",true);	//비동기방식-true로 바꾸고,
+			
+			request.onreadystatechange = function(e){
+				if(request.readyState == 4){
+					document.getElementById("result").innerHTML = request.responseText;
+				}
+			}
+			
+			//서버가 응답을 하기도 전에 문장을 만남
+			//비동기방식으로 할 때는 서버로부터 응답이 완료되었을 때 
+			//다음의 문장을 만나도록 해야 함
+			//==>서버로부터 응답이 완료되었는지 판별할 이벤트처리가 필요:onreadystatechange
+			//=>readtState 가 4면 완료 상태
+			request.send();
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="text"><br>
+	결과 : <span id="result"></span>
+	<hr>
+	<button id="btn">Ajax통신</button>
+</body>
+</html>

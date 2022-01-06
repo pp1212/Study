@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	/*
+	function randomColor(){
+		let colors = ["black","yellow","green","blue","orange","pink"];
+		return colors[nextRandomInteger(colors.length)];
+	}
+	*/
+	
+	function randomColor(){
+		var r = nextRandomInteger(255);
+		var g = nextRandomInteger(255);
+		var b = nextRandomInteger(255);
+		return "rgb("+r+","+g+","+b+")";
+	}
+	
+	
+	//매개변수로 전달받은 범위내의 난수를 반환하는 함수를 만듬
+	function nextRandomInteger(limit){
+		return Math.round(Math.random()*limit);
+	}
+	
+	var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	//랜덤한 알파벳을 반환하는 함수
+	function randomAlphabet(){
+		return alphabet.charAt(nextRandomInteger(25));
+	}
+	
+	//글자가 이동하는 속도를 난수로 만들어주는 함수
+	//때로는 양수가 나오게도 하고 음수가 나오게도 하기 위하여
+	//난수를 2개 만들어서 빼기 연산을 하여 반환
+	function randomSpeed(maxSpeed){
+		return Math.random() * maxSpeed - Math.random() * maxSpeed ;
+	}
+	
+	var canvasWidth = 700;	//글자가 움직일 수 있는 최대 가로 길이
+	var canvasHeight = 500;	//글자가 움직일 수 있는 최대 세로 길이
+	
+	//움직임이 있는 글자를 표현하기 위한 생성자 함수
+	function MovingText(){
+		
+		//글자가 처음 표시되는 위치를 캔버스의 가로,세로 길이를 넘지 않는 범위의 난수 발생
+		this.x = nextRandomInteger(canvasWidth);	
+		this.y = nextRandomInteger(canvasHeight);
+		
+		this.vX = randomSpeed(10);
+		this.vY = randomSpeed(10);
+		
+		//MovingText에 h1이라는 태그를 만듬
+		this.h1 = document.createElement("h1");	//h1태그 만들어주고
+		this.h1.innerHTML = randomAlphabet();	//랜덤한 알파벳 만들어주고
+		this.h1.style.position = "absolute";	//위치 정해줌
+		this.h1.style.color = randomColor();
+		//this.h1.style.color = "rgb(255,0,0)";
+		
+		document.body.appendChild(this.h1);
+		
+	}
+	
+	//MovingText객체에 움직임을 위한 메소드 추가
+	MovingText.prototype.move = function(){
+		
+		//전체화면을 벗어나면 *-1를 해줘서 반대로 가도록
+		if(this.x < 0 || this.x > canvasWidth){
+			this.vX = this.vX * -1;
+		}
+		
+		if(this.y < 0 || this.y > canvasHeight){
+			this.vY = -this.vY ;
+		}
+		
+		this.x += this.vX;
+		this.y += this.vY;
+		
+		this.h1.style.left = this.x + "px";
+		this.h1.style.top = this.y + "px";
+		
+		
+	}
+	
+	window.onload = function(){
+		var arr = [];
+		for(i=0;i<100;i++){
+			arr.push(new MovingText());
+		}
+		
+		setInterval(function(){
+			for(i=0;i<arr.length;i++){
+				arr[i].move();
+			}
+		}, 1000/60);
+		
+	}
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>

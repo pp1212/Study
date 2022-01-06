@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		city = opener.document.getElementById("city").value;		//자식에서 부모에게 접근하는 opener
+		document.getElementById("addr").value = city;
+		
+	}
+	
+	function pro(){
+		addr = document.getElementById("addr").value;
+		opener.document.getElementById("addr").innerHTML = addr;		//span이라서 innerHTML
+		window.close();
+	}
+</script>
+</head>
+<body>
+	주소 : <input type="text" id="addr">
+	<button onclick="pro()">확인</button>
+</body>
+</html>
