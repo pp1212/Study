@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.high_light{
+		background-color: gray;
+	}
+	
+	.active{
+		background-color: pink;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let selected_li;
+		
+		//버튼->추가
+		$("#btnAdd").click(function(){
+			let data = $("#data").val();
+			var li = $("<li></li>").html(data);
+			$("#list").append(li);
+			$("#data").val("");
+		});
+		
+		
+		//마우스 올라가면->하이라이트
+		$(document).on("mouseover","li",function(){		//미래에 만들어지는 거라서 document
+			$(this).addClass("high_light");				//this:마우스가 올라간 li
+		});
+		$(document).on("mouseleave","li",function(){
+			$(this).removeClass("high_light");
+		});
+		
+		
+		//누르면->입력창에 출력,배경색 변경
+		$(document).on("click","li",function(){
+			selected_li = this;
+			$("li").removeClass("active");
+			$(this).addClass("active");
+			
+			let str = $(this).html();
+			$(data).val(str);
+			// = $(data).val($(this).html());
+		});
+		
+		
+		//누르면 입력창에 출력된 것->수정하고 엔터치면 리스트에도 수정
+		$("#data").keypress(function(e){
+			let code = e.keyCode;
+			//alert(code);		//keyCode값 알기 위해서 
+			if(code == 13){
+				$(selected_li).html($("#data").val());	//input칸(#data)에 써져 있는 값을 눌러진 li(selected_li)에 바꾼다
+			}
+		});
+		
+		
+		//리스트 더블클릭->항목 삭제
+		$(document).on("dblclick","li",function(){
+			$(this).remove();
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>직장인이 선호하는 점심메뉴</h2>
+	<hr>
+	<ul id="list"></ul>
+	<hr>
+	입력하세요==>
+	<input type="text" id="data">
+	<button id="btnAdd">추가</button>
+</body>
+</html>

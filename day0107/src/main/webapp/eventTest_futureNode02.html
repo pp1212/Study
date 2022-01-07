@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//처음부터 있는 li에만 이벤트가 동작하고
+		//미래에 만들어진 li에는 이벤트가 동작하지 않음
+		$("li").click(function(){			//태그에 대해서 이벤트 거는 것
+			let li = $(this).html();
+			alert(li);
+		});
+		
+		$("button").click(function(){
+			let data = $("#data").val();
+			let li = $("<li></li>").html(data);
+			$(li).click(function(){			//변수에 대해서 이벤트 거는 것
+				let li = $(this).html();
+				alert(li);
+			});
+			
+			$("ul").append(li);
+		});
+	});
+</script>
+</head>
+<body>
+	<ul>
+		<li>사과</li>
+		<li>포도</li>
+	</ul>
+	<hr>
+	<input type="text" id="data">
+	<button>추가</button>
+</body>
+</html>

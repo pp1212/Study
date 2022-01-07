@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let arr1 = ["홍길동","이순신","유관순"];	
+		//문자열(String)의 배열 -> item의 val함수 쓸 수 없음
+		/*$.each(arr1,function(index,item){
+			alert(item);					//그냥 String이 옴 -> val,html 쓰면 안됨
+		});*/
+		
+		
+		let arr2 = [{name:"사과",price:2000},{name:"포도",price:3000},{name:"수박",price:8000}];	
+		//객체의 배열
+		$.each(arr2,function(index,item){
+			alert(item.name);
+		});
+		
+		
+		let arr3 = $("input");	
+		//input태그들의 배열, item의 val함수 쓸 수 있음
+		/*$.each(arr3, function(index,item){		//있는 만큼 다음의 함수 실행하라
+			let data = $(item).val();			//item은 input태그니까 val함수
+			alert(data);
+		});*/
+		
+		
+		
+		let arr4 = $("h2");		
+		//h2태그들의 배열, item의 html함수 쓸 수 있음
+		/*$.each(arr4, function(index,item){
+			let data = $(item).html();
+			alert(data);
+		});*/
+	});
+</script>
+</head>
+<body>
+	<input type="text" value="10">
+	<input type="text" value="20">
+	<input type="text" value="30">
+	<hr>
+	<h2>짬뽕</h2>
+	<h2>짜장면</h2>
+	<h2>탕수육</h2>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//$("#list").css("border","solid 1px black");
+		//$("#list").css("width","600");
+		$("#list").css({
+			border:"solid 1px red",
+			width:"600"
+		});
+		
+		$("#btnAdd").click( function(){
+			var arr = $("input[type=text]");		//input태그 중에 type이 text인 것만 선택하라 -> arr:배열 -> 루프 돌면서 td에 추가하고 tr에 추가
+			//배열만큼 반복실행하여 td를 생성하고
+			//tr에 추가하여 list에 추가
+			var tr = $("<tr></tr>");
+			$.each(arr, function(index,item){
+				//$(tr).append( $("<td></td>").html( $(this).val() ) );		//$(this).val() -> input안에 적힌 글자 => td로 만들고 tr에 추가하라
+				var str = $(this).val();
+				var td = $("<td></td>").html(str);
+				$(tr).append(td);
+			});
+			
+			$("#list").append(tr);
+			$(arr).val("");
+		} );
+	});
+</script>
+</head>
+<body>
+	이름 : <input type="text"><br>
+	나이 : <input type="text"><br>
+	주소 : <input type="text"><br>
+	<input type="submit" value="등록" id="btnAdd">
+	<table id="list">
+		<tr>
+			<th>이름</th>
+			<th>나이</th>
+			<th>주소</th>
+		</tr>
+	</table>
+</body>
+</html>

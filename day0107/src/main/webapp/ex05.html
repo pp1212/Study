@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		r = $("h2");
+		$.each(r, function(index,item){		//.each 1매개변수:배열, 2매개변수:함수
+			str = $(this).html();
+			alert(str);
+		});
+	});
+</script>
+</head>
+<body>
+	<h1>홍길동</h1>
+	<h2>서울</h2>
+	
+	<h1>이순신</h1>
+	<h2>부산</h2>
+	
+	<h1>유관순</h1>
+	<h2>인천</h2>
+	
+</body>
+</html>

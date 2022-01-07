@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#btnAdd").click(function(){
+			data = $("#data").val();			//매개변수 있으면 설정,매개변수 없으면 읽어오는 것 
+			li = $("<li></li>").html(data);
+			$("#list").append(li);
+		});
+	});
+</script>
+</head>
+<body>
+	<ul id="list"></ul>
+	<hr>
+	<input type="text" id="data">
+	<button id="btnAdd">추가</button>
+</body>
+</html>

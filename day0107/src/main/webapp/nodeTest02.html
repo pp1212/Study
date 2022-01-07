@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let arr = ["짜장면","햄버거","짬뽕","청국장","된장찌개"];	//String(문자열) 배열 -> val,html함수 안 써도 됨
+		//읽어오기 버튼->배열 목록만큼 리스트 생성
+		$("button").click(function(){
+			$.each(arr,function(index,item){
+				$("ul").append($("<li></li>").html( item ));	
+				//item으로 그냥 받아 옴 -> li에 넣기 -> ul에 넣기
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<ul></ul>
+	<button>읽어오기</button>
+</body>
+</html>

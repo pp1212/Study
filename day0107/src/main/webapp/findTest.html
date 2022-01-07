@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			var arr = $("#list1").find("li");
+			alert(arr.length);
+		});
+	});
+</script>
+</head>
+<body>
+	<ul id="list1">
+		<li>사과</li>
+		<li>포도</li>
+		<li>수박</li>
+		<li>딸기</li>
+	</ul>
+	<hr>
+	<ol id="list2">
+		<li>홍길동</li>
+		<li>이순신</li>
+		<li>유관순</li>
+	</ol>
+	
+	<button>확인</button>
+</body>
+</html>

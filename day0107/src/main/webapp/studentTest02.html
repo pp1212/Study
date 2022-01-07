@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.active{
+		background-color: pink;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var arr = $("input[type=text]");
+		
+		$("button").click(function(){
+			var tr = $("<tr></tr>");
+			var tot = 0;
+			$.each(arr, function(index,item){
+				let data = $(item).val();
+				let td = $("<td></td>").html( data );
+				$(tr).append( td );
+				if(index != 0){
+					tot += Number(data);
+				}
+			});
+			avg = tot/3;
+			$(tr).append( $("<td></td>").html( tot ) );
+			$(tr).append( $("<td></td>").html( avg ) );
+			
+			$("table").append(tr);
+			$(arr).val("");
+		});
+		
+		$(document).on("click","tr",function(){
+			var td_list = $(this).find("td");	//find:자식 찾는 것
+			//alert($(td_list[0]).html());
+			
+			$("tr").removeClass("active");		//앞에 거 지우고
+			$(this).addClass("active");			//다시 누르면 클래스 추가
+			
+			$.each(arr,function(index,item){
+				$(item).val( $(td_list[index]).html() );	//글자가져와야 하니까 .html or text 해야 함
+			});
+		});
+		
+		
+		
+	});
+</script>
+</head>
+<body>
+	<table border="1" width="80%">
+		<tr>
+			<th>이름</th>
+			<th>국어</th>
+			<th>영어</th>
+			<th>수학</th>
+			<th>총점</th>
+			<th>평균</th>
+		</tr>
+	</table>
+	
+	<hr>
+	이름 : <input type="text"><br>
+	국어 : <input type="text"><br>
+	영어 : <input type="text"><br>
+	수학 : <input type="text"><br>
+	<button>등록</button>
+</body>
+</html>

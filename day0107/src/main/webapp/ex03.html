@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//$("h2").text("제주");	//자바스크립트에서는 여러개 선택하려면 반복문 돌아야 하는데 jquery는 한번에 선택 가능
+		$("h2").html("제주");
+		// $("h2")의 결과는 배열
+		//값을 설정할 때는 모두 변경이 됨
+		//.text로 해도 되고 .html로 해도 됨
+	});
+</script>
+</head>
+<body>
+	<h1>홍길동</h1>
+	<h2>서울</h2>
+	
+	<h1>이순신</h1>
+	<h2>부산</h2>
+	
+	<h1>유관순</h1>
+	<h2>인천</h2>
+	
+</body>
+</html>

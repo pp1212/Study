@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			var arr = $("input[type=text]");
+			var tr = $("<tr></tr>");
+			var tot = 0;
+			$.each(arr, function(index,item){
+				let data = $(item).val();
+				let td = $("<td></td>").html( data );
+				$(tr).append( td );
+				if(index != 0){
+					tot += Number(data);
+				}
+			});
+			avg = tot/3;
+			$(tr).append( $("<td></td>").html( tot ) );
+			$(tr).append( $("<td></td>").html( avg ) );
+			
+			$("table").append(tr);
+			$(arr).val("");
+		});
+	});
+</script>
+</head>
+<body>
+	<table border="1" width="80%">
+		<tr>
+			<th>이름</th>
+			<th>국어</th>
+			<th>영어</th>
+			<th>수학</th>
+			<th>총점</th>
+			<th>평균</th>
+		</tr>
+	</table>
+	
+	<hr>
+	이름 : <input type="text"><br>
+	국어 : <input type="text"><br>
+	영어 : <input type="text"><br>
+	수학 : <input type="text"><br>
+	<button>등록</button>
+</body>
+</html>

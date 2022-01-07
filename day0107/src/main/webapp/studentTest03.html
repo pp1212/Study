@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	.active{
+		background-color: pink;
+	}
+	
+	.high_light{
+		background-color: yellow;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var arr = $("input[type=text]");
+		var td_list;
+		var sel_tr;	//눌러진 tr을 담아둘 변수
+		
+		$("#btnAdd").click(function(){
+			var tr = $("<tr></tr>");
+			var tot = 0;
+			$.each(arr, function(index,item){
+				let data = $(item).val();
+				let td = $("<td></td>").html( data );
+				$(tr).append( td );
+				if(index != 0){
+					tot += Number(data);
+				}
+			});
+			avg = tot/3;
+			$(tr).append( $("<td></td>").html( tot ) );
+			$(tr).append( $("<td></td>").html( avg ) );
+			
+			$("table").append(tr);
+			$(arr).val("");
+		});
+		
+		$(document).on("click","tr",function(){
+			
+			sel_tr = this;		//눌러진 tr을 sel_tr에 저장
+			td_list = $(this).find("td");	//find:자식 찾는 것
+			//alert($(td_list[0]).html());
+			
+			$("tr").removeClass("active");		//앞에 거 지우고
+			$(this).addClass("active");			//다시 누르면 클래스 추가
+			
+			$.each(arr,function(index,item){
+				$(item).val( $(td_list[index]).html() );	//글자가져와야 하니까 .html or text 해야 함
+			});
+		});
+		
+		$("#btnUpdate").click(function(){
+			var tot = 0;
+			$.each(arr,function(index,item){
+				$(td_list[index]).html( $(item).val() );
+				if(index != 0){
+					tot += Number($(item).val());
+				}
+			});
+			avg = tot/3;
+			$(td_list[4]).html(tot);
+			$(td_list[5]).html(avg);
+		});
+		
+		$("#btnDelete").click(function(){
+			$(sel_tr).remove();		//jquery함수라서 괄호로 감싸야 함
+		});
+		
+		
+		//mouseover:마우스가 올라가면, mouseleave:마우스가 나가면 동작
+		$(document).on("mouseover","tr",function(){
+			$(this).addClass("high_light");
+		});
+		
+		$(document).on("mouseleave","tr",function(){
+			$(this).removeClass("high_light");
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<table border="1" width="80%">
+		<tr>
+			<th>이름</th>
+			<th>국어</th>
+			<th>영어</th>
+			<th>수학</th>
+			<th>총점</th>
+			<th>평균</th>
+		</tr>
+	</table>
+	
+	<hr>
+	이름 : <input type="text"><br>
+	국어 : <input type="text"><br>
+	영어 : <input type="text"><br>
+	수학 : <input type="text"><br>
+	<button id="btnAdd">등록</button>
+	<button id="btnUpdate">수정</button>
+	<button id="btnDelete">삭제</button>
+</body>
+</html>

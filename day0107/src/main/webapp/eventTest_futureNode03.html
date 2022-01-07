@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//처음부터 있는 노드와 미래에 만들어진 노드에 이벤트를 등록
+		$(document).on("click","li",function(){		//click:이벤트 이름, li:대상
+			let data = $(this).html();
+			alert(data);
+		});
+		
+		$("button").click(function(){
+			let data = $("#data").val();
+			let li = $("<li></li>").html(data);
+			
+			$("ul").append(li);
+		});
+	});
+</script>
+</head>
+<body>
+	<ul>
+		<li>사과</li>
+		<li>포도</li>
+	</ul>
+	<hr>
+	<input type="text" id="data">
+	<button>추가</button>
+</body>
+</html>
