@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let arr_team = ["일찍끝내조","B4","취업을 자바줘"];
+		let arr_name1 = ["김수연","박지예","유하림","임하연"];
+		let arr_name2 = ["최현호","김지현","윤서우","정자영"];
+		let arr_name3 = ["윤태인","김시아","노유나","박성미","임상진"];
+
+		
+		//배열만큼 반복 실행하여 동적으로 option태그를 생성하여 추가
+		$.each(arr_team, function(index,item){
+			let option = $("<option></option>").html(item);	//item 1 :일찍끝내조
+			$("#team_list").append(option);
+		});
+		
+		$("#team_list").change(function(){
+			let team_name = $("#team_list > option:selected").val();
+			
+			$("#name_list").empty();
+			//사람이름이 출력되는 select 태그 안에 있는 option들을 모두 삭제
+			
+			if(team_name == "일찍끝내조"){
+				$.each(arr_name1, function(index,item){
+					$("#name_list").append( $("<option></option>").html(item));
+				});
+			}else if(team_name == "B4"){
+				$.each(arr_name2, function(index,item){
+					$("#name_list").append( $("<option></option>").html(item));
+				});
+			}else{
+				$.each(arr_name3, function(index,item){
+					$("#name_list").append( $("<option></option>").html(item));
+				});
+			}
+		});
+		
+		
+	});
+</script>
+</head>
+<body>
+	<select id="team_list">
+	</select>
+	<select id="name_list">
+	</select>
+</body>
+</html>

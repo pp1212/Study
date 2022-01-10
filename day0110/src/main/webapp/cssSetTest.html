@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	span{
+		display: inline-block;
+		width: 30px;
+		height: 20px;
+		margin: 20px;
+	}
+	
+	body{
+		padding: 100px;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("span").click(function(){
+			$("div").css("color", $(this).css("background-color"));
+		});
+		
+		
+	
+		/*
+		let span_list = $("span");
+		$.each(span_list, function(index,item){
+			$(item).click(function(){
+				let color = $(this).css("background-color");
+				$("div").css("color",color);
+			});
+		});*/
+	});
+</script>
+</head>
+<body>
+	<div>펄어비스(대표 정경인)는 ‘검은사막’이 글로벌 게임 서비스 플랫폼 ‘스팀’에서 발표한 ‘2021 최고작’ 최다 판매 부문(Top Sellers)에 선정됐다고 10일 밝혔다.
+
+‘스팀’은 매년 최고의 게임 톱100을 ▲최다 판매 ▲인기 출시작 ▲최다 플레이 ▲얼리 액세스 졸업작 ▲베스트 VR ▲컨트롤러 지원 6개 부문으로 발표한다.
+
+‘검은사막’은 지난해 ‘스팀’에서 총수익 기준 상위 100개 게임을 선정하는 최다 판매 부문에 이름을 올렸다. 국내 MMORPG 중 유일한 기록이다. ‘헤일로 인피니트’, ‘몬스터헌터 월드’ 등 글로벌 흥행작과 함께 선정됐다.</div>
+	<hr>
+	<span style="background: red"></span>
+	<span style="background: green;"></span>
+	<span style="background: blue;"></span>
+	<span style="background: pink;"></span>
+	<span style="background: orange;"></span>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#btnName").click(function(){
+			$(".name").css("color","orange");
+		});
+		
+		$("#btnManager").click(function(){
+			$(".manager").css("background","yellow");
+		});
+	});
+</script>
+</head>
+<body>
+	<p class="name">홍길동</p>
+	<p>20</p>
+	<p>서울시 마포구 서교동</p>
+	<hr>
+	<p class="name manager">이순신</p>		<!-- 클래스는 여러개 설정할 수 있음, id는 유니크하게 한개만! -->
+	<p class="manager">30</p>
+	<p class="manager">서울시 마포구 동교동</p>
+	<hr>
+	<p class="name">유관순</p>
+	<p>40</p>
+	<p>서울시 마포구 창천동</p>
+	<hr>
+	<!-- 이름만 선택하고 싶은데 
+			이름,나이,주소가 모두 p태그로 되어있음
+			그래서 이름만 구별하기 위해서 
+			이름이 있는 태그에 클래스를 똑같이 설정하여 그룹을 만듬 -->
+	
+	<button id="btnName">이름 선택</button>
+	<button id="btnManager">관리자의 이름,나이,주소 선택</button>
+</body>
+</html>
