@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		//한 개일 경우
+		setTimeout(function(){
+			$("h1").html( "*"+$("h1").html()+"*" );
+									//↑읽어올 때는 맨 처음의 하나만 읽어오니까 여러개일 경우 이렇게 쓰면 안됨
+		} ,3000);
+		
+	});
+</script>
+</head>
+<body>
+	<h1>홍길동</h1>
+	
+	
+</body>
+</html>
