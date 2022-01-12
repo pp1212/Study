@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	div{
+		margin: 10px;
+		padding: 10px;
+		border: solid 3px black;
+		border-radius: 10px;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/* $("div").on("click",function(){
+			$(this).clone().appendTo("body");
+		}); */
+		
+		$(document).on("click","div",function(){
+			$(this).clone().appendTo("body");
+		});
+	});
+</script>
+</head>
+<body>
+	<div>
+		<h1>티맵모빌리티, 서울용달협회와 화물차 전용 내비게이션 활성화</h1>
+		<p>티맵모빌리티가 서울특별시개인(용달)화물자동차운송사업협회(서울용달협회)와 손을 맞잡았다.
+
+티맵모빌리티는 서울용달협회와 '티맵(TMAP) 화물차 전용 내비게이션 활성화를 위한 업무협약(MOU)'을 체결했다고 12일 발표했다. 서울용달협회는 1970년 11월 설립돼 2만6천대 이상의 용달 회원을 보유하고 있다.</p>
+	</div>
+</body>
+</html>
