@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			let member = {
+					name:"홍길동",
+					age:20
+			};
+			
+			//서버와 연결
+			$.ajax({
+				url:"helloData.jsp",
+				data:member,	//서블릿으로 member로 name,age가 전달이 됨
+								//↓서버가 응답하는 데이터
+				success:function(data){
+					$("h2").html(data);	//성공하면 데이터를 h2에 넣기
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<button>Ajax통신하기</button>
+	<hr>
+	서버로 부터 수신된 데이터
+	<h2></h2>
+</body>
+</html>

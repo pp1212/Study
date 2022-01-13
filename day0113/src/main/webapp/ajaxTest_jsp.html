@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+				  //↓서블릿에 설정된 이름이나 jsp이름이 올 수 있음		
+				  //								↓servlet이 실행되고 주는 데이터
+			$.ajax({url:"hello.jsp",success:function(data){
+				$("h2").html(data);		//= $("h2").text(data);	-> 받아 온 데이터를 h2에 넣기
+			}});
+		});
+	});
+</script>
+</head>
+<body>
+	<button>Ajax통신하기</button>
+	<hr>
+	서버로 부터 수신된 데이터
+	<h2></h2>
+</body>
+</html>

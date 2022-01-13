@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#btnOK").click(function(){
+			let data = {									//데이터 전달을 위해 객체 생성
+					bookname:$("#bookname").val(),			//한 줄에 하나의 객체,값을 전달해주려면 .val(), getPrice.jsp의 getParameter("bookname")이랑 같아야 함
+					publisher:$("#publisher").val()
+			};
+			
+			//ajax 통신
+			$.ajax({
+				url:"getPrice.jsp",						//한 줄에 하나의 속성
+				data:data,								//위에서 만든 보낼 데이터의 변수
+								//↓서버가 응답하는 데이터
+				success:function(data){
+					$("#price").html(data);				//성공하면 데이터(서버가 응답하는 데이터)를 span에 넣기
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	도서명 : <input type="text" id="bookname"><br>
+	출판사명 : <input type="text" id="publisher"><br>
+	가격 : <span id="price"></span>
+	<hr>
+	<button id="btnOK">가격확인</button>
+</body>
+</html>

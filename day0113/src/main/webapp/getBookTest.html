@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let span_list = $("span");	//배열:3개
+		$("button").click(function(){
+			$.ajax({						//이번에는 보낼 데이터가 없어서 url,success만 사용
+				url:"getBook.jsp",
+				success:function(data){
+					let arr = data.split(",");		//3개 가져와짐 -> 1.id를 줘서 각각 하는 방법,2.span으로 가져와서 루프 돌리기
+					
+					$.each(span_list , function(i){
+						//span 한 개
+						$(this).html( arr[i] );
+					});
+				}
+			})
+		});
+	});
+	//콤마로 데이터가 가져와짐 => csv -> split함수로 분리해줘야 함 
+</script>
+</head>
+<body>
+	도서명 : <span></span><br>
+	출판사 : <span></span><br>
+	가격 : <span></span><br>
+	<button>도서정보 읽어오기</button>
+</body>
+</html>
