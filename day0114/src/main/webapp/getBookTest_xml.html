@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let span_list = $("span");	
+		$("button").click(function(){
+			let data = {bookid:$("#bookid").val()};
+			
+			$.ajax({						
+				url:"getBook_xml.jsp",
+				data:data,
+				success:function(data){
+					//book 한 개만 오니까 거기서 찾는 것임
+					//xml 노드 찾으려면 find함수 해야 함
+					let bookname = $(data).find("bookname").text();
+					let publisher = $(data).find("publisher").text();
+					let price = $(data).find("price").text();
+					$(span_list[0]).html(bookname);
+					$(span_list[1]).html(publisher);
+					$(span_list[2]).html(price);
+				}
+			})
+		});
+	});
+	//콤마로 데이터가 가져와짐 => csv -> split함수로 분리해줘야 함 
+</script>
+</head>
+<body>
+	
+	도서명 : <span></span><br>
+	출판사 : <span></span><br>
+	가격 : <span></span><br>
+	<hr>
+	도서번호 : <input type="text" id="bookid"> <button>도서정보 읽어오기</button>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			
+			$("tbody").empty();		//remove(객체 자신 제거),empty(객체의 후손 제거) -> 지우는 것
+									//empty를 쓸 건데 그냥 table로 하면 다 지워지니까 처음부터 table 안에 <thead>,<tbody>로 나누고
+									//<tbody>를 empty 함
+			
+			let publisher = $("#publisher").val();
+			let data = {publisher:publisher};		
+			//한 줄로 쓰면 let data = {data:$("#publisher").val()};
+			
+			$.ajax({
+				//url:"listBookByPublisher.jsp",
+				url:"listBookByPublisher_XStream.jsp",
+				data:data,
+				success:function(data){
+					let arr = $(data).find("book");
+					$.each(arr,function(){
+						let bookid = $(this).find("bookid").text();
+						let bookname = $(this).find("bookname").text();
+						let publisher = $(this).find("publisher").text();
+						let price = $(this).find("price").text();
+						
+						let tr = $("<tr></tr>");
+						$(tr).append( $("<td></td>").html(bookid) );
+						$(tr).append( $("<td></td>").html(bookname) );
+						$(tr).append( $("<td></td>").html(publisher) );
+						$(tr).append( $("<td></td>").html(price) );
+						
+						$("tbody").append(tr);
+					})
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	출판사명 : <input type="text" id="publisher"> 
+	<button>확인</button>
+	<hr>
+	<table border="1">
+		<thead>
+		<tr>
+			<th>도서번호</th>
+			<th>도서명</th>
+			<th>출판사</th>
+			<th>가격</th>
+		</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</body>
+</html>
