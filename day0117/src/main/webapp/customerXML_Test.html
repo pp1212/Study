@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			$.ajax({
+				url:"CustomerXML",	//xml로 응답
+				success:function(xmlDOC){//↓그래서 xml로 받음↓
+					let list = $(xmlDOC).find("customer");	//customer로 묶여 있어서 -> 배열
+					$.each(list, function(){
+						let custid = $(this).find("custid").text();		//첫 번째 customer노드 -> 그 안에서 find 함수로 custid를 찾음
+						let name = $(this).find("name").text();
+						let address = $(this).find("address").text();
+						let phone = $(this).find("phone").text();
+						let tr = $("<tr></tr>");//노드를 생성해 추가
+						$(tr).append($("<td></td>").html(custid));
+						$(tr).append($("<td></td>").html(name));
+						$(tr).append($("<td></td>").html(address));
+						$(tr).append($("<td></td>").html(phone));
+						
+						$("tbody").append(tr);
+					});
+				}
+			})
+		});
+	});
+</script>
+</head>
+<body>
+	<button>고객 목록 읽어오기</button>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<th>고객번호</th>
+				<th>고객이름</th>
+				<th>주소</th>
+				<th>전화</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+</body>
+</html>

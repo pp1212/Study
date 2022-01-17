@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		//사용자가 입력한 값을 원래 일일이 받아와야 했음
+		/* let custid = $("#custid").val();  
+		let name = $("#name").val();
+		let address = $("#address").val();
+		let phone = $("#phone").val();
+		let data = {
+				custid:custid,
+				name:name,
+				address:address,
+				phone:phone
+		} */
+		
+		
+		//name을 만들면 한 번에 받아올 수 잇음
+		$("#btnAdd").click(function(){
+			let data = $("#f").serializeArray();
+			$.post("Customer",data,function(){
+				
+			});
+		});
+		
+		
+		$("#btnRead").click(function(){
+			$("tbody").empty();
+			$.get("Customer",function(arr){
+				$.each(arr,function(){
+					let td1 = $("<td></td>").html(this.custid);	
+					let td2 = $("<td></td>").html(this.name);	
+					let td3 = $("<td></td>").html(this.address);	
+					let td4 = $("<td></td>").html(this.phone);
+					let tr = $("<tr></tr>").append(td1, td2, td3, td4);
+					$("tbody").append(tr);
+				})
+			})
+		});
+	});
+</script>
+</head>
+<body>
+	<form id="f">
+		고객번호 : <input type="text" id="custid" name="custid"><br>
+		고객이름 : <input type="text" id="name" name="name"><br>
+		고객주소 : <input type="text" id="address" name="address"><br>
+		고객전화 : <input type="text" id="phone" name="phone"><br>
+	</form>
+	
+	<button id="btnAdd">등록</button>
+	<button id="btnRead">목록</button>
+	<hr>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<th>고객번호</th>
+				<th>고객이름</th>
+				<th>고객주소</th>
+				<th>고객전화</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</body>
+</html>
