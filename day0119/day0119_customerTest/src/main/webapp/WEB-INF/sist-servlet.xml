@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- dao부터 만들어야 하고 ,dao를 맴버로 갖고 있는 컨트롤러 만듬 -->
+	<bean id="customerDAO" class="com.sist.dao.CustomerDAO"/>
+	<bean class="com.sist.controller.CustomerController">
+		<property name="dao" ref="customerDAO"></property>
+	</bean>
+	
+	<!-- 객체를 생성해야 사용 -->
+	<bean class="com.sist.controller.InsertCustomerController">
+		<property name="dao" ref="customerDAO"/>	<!-- 매개변수로 dao 참조 -->
+	</bean>
+	
+	<bean class="com.sist.controller.UpdateCustomerController">
+		<property name="dao" ref="customerDAO"/>
+	</bean>
+	
+	
+	<!-- 컨트롤러에서 위치와 확장자를 생략해서 찾아주는 것 만듬, 이것의 id는 무조건 viewResolver여야 함 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>		<!-- 위치 -->
+		<property name="suffix" value=".jsp"></property>				<!-- 확장자 -->
+	</bean>
+</beans>
