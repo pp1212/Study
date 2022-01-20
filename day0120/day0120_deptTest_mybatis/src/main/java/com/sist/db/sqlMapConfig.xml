@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <properties resource="com/sist/db/db.properties"/>
+  <typeAliases>
+  	<typeAlias type="com.sist.vo.DeptVO" alias="deptVO"/>
+  	<typeAlias type="com.sist.vo.EmpVO" alias="empVO"/>
+  </typeAliases>
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/sist/db/deptMapper.xml"/>
+    <mapper resource="com/sist/db/empMapper.xml"/>
+    <!-- 이 파일안에 mapper파일이 있어서 이거만 읽어들여도 mapper 사용 가능 -->
+    <!-- 이 밑으로 여러개 만들어질 수 있음 -->
+  </mappers>
+</configuration>
