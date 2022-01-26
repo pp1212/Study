@@ -31,10 +31,10 @@ public class BoardController {
 	@RequestMapping("/listBoard")
 	public void list(
 			HttpSession session ,	//정렬 컬럼, 검색 컬럼, 검색어를 상태유지하기 위하여 session변수를 매개변수로 정의
-			Model model,	//View페이지에서 필요한 데이터를 유지하기 위하여 Model을 선언
-			String orderColumn,	//검색 컬럼을 받아오기 위한 변수
-			String keyword , 	//검색어를 받아오기 위한 변수
-			String searchColumn,	//정렬 컬럼을 받아 오기 위한 변수
+			Model model,	        //View페이지에서 필요한 데이터를 유지하기 위하여 Model을 선언
+			String searchColumn,    //검색 컬럼을 받아오기 위한 변수
+			String keyword , 	    //검색어를 받아오기 위한 변수
+			String orderColumn,	    //정렬 컬럼을 받아 오기 위한 변수
 			@RequestParam(value = "pageNUM",defaultValue = "1") int pageNUM) { //페이지 번호를 받아오기 위한 변수
 		
 		//새로 정렬을 안 하고 세션에 이미 정렬한 값이 있으면 세션에 있는 orderColumn을 가져옴
