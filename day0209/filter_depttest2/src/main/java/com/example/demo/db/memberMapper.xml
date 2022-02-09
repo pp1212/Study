@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+  <select id="isMember" resultType="java.lang.String">
+    select pwd from member where id=#{id}
+  </select>
+  
+  
+  <!-- 	1)role만 찾는 방법,
+  		2)id에 해당하는 회원의 정보를 MemberVO로 가져오는 방법 -->
+  <select id="getRole" resultType="java.lang.String">
+  	select role from member where id=#{id}
+  </select>
+</mapper>
