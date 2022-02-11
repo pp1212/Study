@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+			$.ajax({
+				url:"listDept.do",
+				success:function(data){	//응답하는 데이터를 받아오는 변수 써 줌
+					//console.log(data);	//받아 온 데이터를 확인하느라 콘솔창에 출력
+					$.each(data,function(){		//1)매개변수  2)this ->이번엔 this 쓰는 방법
+						let tr = $("<tr></tr>");
+						/* let td1 = $("<td></td>").html(this.dno);
+						let td2 = $("<td></td>").html(this.dname);
+						let td3 = $("<td></td>").html(this.dloc); 
+						$(tr).append(td1,td2,td3);	//한 번에 3개 담을 수 있음
+						밑에랑 같은 방법*/
+						
+						$(tr).append($("<td></td>").html(this.dno));
+						$(tr).append($("<td></td>").html(this.dname));
+						$(tr).append($("<td></td>").html(this.dloc));
+						$("tbody").append(tr);
+					})
+				}
+			})
+	});
+</script>
+</head>
+<body>
+	<h2>부서목록</h2>
+	<hr>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<td>부서번호</td>
+				<td>부서명</td>
+				<td>부서위치</td>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</body>
+</html>

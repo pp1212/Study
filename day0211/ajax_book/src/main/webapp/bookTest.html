@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:"listBook",
+			success:function(data){
+				$.each(data,function(){
+					let tr = $("<tr></tr>").attr("bookid",this.bookid);	//속성 만들기 1번째 방법 속성 만들기 -> attr()
+					$(tr).append($("<td></td>").html(this.bookid));
+					$(tr).append($("<td></td>").html(this.bookname));
+					$(tr).append($("<td></td>").html(this.publisher));
+					$(tr).append($("<td></td>").html(this.price));
+					
+					$("#bookList").append(tr);
+					
+					//이벤트 등록 2번째 방법
+					/* $(tr).click(function(){
+						let bookid = $(this).attr("bookid");
+						alert(bookid);
+					}) */
+				});
+			}});
+		//tr을 동적으로 만들었으니까 1)tr을 만들 때 tr에 속성 만드는 방법
+		//2)tr을 눌렀을 때 자식노드(td)들을 찾아서 첫 번째 있는 노드=도서번호
+		
+		/* $("tr").click(function(){
+			alert("OK");
+		}) -> 이렇게 하면 미래에 만들어진 tr들은 이벤트 동작하지 않음 */
+		//미래에 만들어진 노드에 이벤트 추가하는 방법
+		//1)tr 만들어진 변수로 이벤트 등록
+		//2)document(내장객체)로 범위를 제한하여 이벤트 등록
+		
+		//이벤트 등록 1번째 방법 이게 더 깔끔
+		$(document).on("click","tr",function(){
+			
+			$("#customerList").empty();	//자식노드를 모두 삭제
+			
+			let bookid = $(this).attr("bookid");
+			//alert(bookid);
+			let data = {bookid:bookid};								//서버가 응답한 데이터
+			$.ajax({url:"findByBookID",data:data,success:function(data){	
+					$.each(data,function(){
+						let tr = $("<tr></tr>");
+						$(tr).append($("<td></td>").html(this.custid));
+						$(tr).append($("<td></td>").html(this.name));
+						$(tr).append($("<td></td>").html(this.address));
+						$(tr).append($("<td></td>").html(this.phone));
+						$("#customerList").append(tr);
+					});
+				}});
+		})
+	});
+</script>
+</head>
+<body>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<td>도서번호</td>
+				<td>도서명</td>
+				<td>출판사</td>
+				<td>가격</td>
+			</tr>
+		</thead>
+		<tbody id="bookList"></tbody>
+	</table>
+	<hr>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<td>고객번호</td>
+				<td>고객명</td>
+				<td>주소</td>
+				<td>전화</td>
+			</tr>
+		</thead>
+		<tbody id="customerList"></tbody>
+	</table>
+</body>
+</html>
