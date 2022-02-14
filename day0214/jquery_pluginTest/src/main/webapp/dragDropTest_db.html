@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./jquery-ui/jquery-ui.css">
+<style type="text/css">
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	body{
+		font-size: 62.5%;
+	}
+	
+	.item{
+		margin: 3px;
+		padding: 5px;
+	}
+	
+	.item > img{
+		width: 100px;
+		height: 100px;
+	}
+	
+	#wrap{
+		overflow: hidden;
+	}
+	
+	#wrap > div{
+		float: left;
+	}
+	
+	#dock{
+		position: fixed;
+		min-height: 120px;
+		width: 100%;
+		bottom: 0px;
+		z-index: 1;
+	}
+	
+	#dock > div{
+		float: right;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		let arr;
+		$.ajax({url:"listGoods",success:function(data){
+			arr = data;	//지금은 객체
+			
+			$.each(arr,function(){	//매개변수 써도 되고 안 써도 됨
+				let fname = this.fname;
+				let name = this.name;
+				let price = this.price;
+				let icon = "";	//비어있는 변수 만들고
+				icon += "<div class='ui-widget-content ui-corner-all item'>";	//바깥이 ""이면 안에는 ''로 해줘야 함!
+				icon += "<img src='images/"+fname+"'>";
+				icon += "<p>"+name+"/("+price+")</p>";
+				icon += "</div>";	//문자열을 누적하는 것
+				$("#wrap").append(icon);
+			});
+			
+			$("#wrap > div").draggable({
+				helper:"clone",
+				zIndex:100,
+				scroll:false
+			});
+			
+			$("#dock").droppable({		//끌어오는 요소를 제한할 수 있음
+				accept:"#wrap > div",
+				drop:function(event,ui){
+					$(ui.draggable).fadeOut(function(){
+						$(this).appendTo("#dock").fadeIn();
+					});
+				}
+			});
+			$("body").droppable({
+				accept:"#dock > div",
+				drop:function(event,ui){
+					$(ui.draggable).fadeOut(function(){
+						$(this).appendTo("#wrap").fadeIn();
+					});
+				}
+			});
+		}});
+		
+		
+		
+		
+		
+	})
+</script>
+</head>
+<body>
+	<div id="wrap"></div>
+	<div id="dock" class="ui-state-error"></div>
+</body>
+</html>

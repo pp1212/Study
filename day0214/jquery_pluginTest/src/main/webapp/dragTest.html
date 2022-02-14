@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./jquery-ui/jquery-ui.css">
+<style type="text/css">
+	.box{
+		width: 100px;
+		height: 100px;
+		float: left;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("div.box").draggable({	//드래그가 가능하도록 해줌, 옵션을 줌
+			grid:[102,102],
+			stop:function(event,ui){		//드래그가 끝났을 때 동작하는 함수, 두 번째 매개변수:드래그 한 요소
+				alert(ui.offset.left + ":" + ui.offset.top)
+			}
+		});	
+	})
+</script>
+</head>
+<body>
+	<div class="box ui-widget-content"></div>
+	<div class="box ui-widget-content"></div>
+	<div class="box ui-widget-content"></div>
+	<div class="box ui-widget-content"></div>
+</body>
+</html>

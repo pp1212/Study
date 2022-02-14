@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="./jquery-ui/jquery-ui.css">
+<style type="text/css">
+	.box{
+		padding: 5px;
+	}
+	
+	.box p{
+		margin: 0px;
+		padding: 5px;
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="./jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#radio").buttonset();//버튼 모양으로 만들어주세요->label이 있어야 함
+		
+		//함수 생성
+		function reset(){
+			let resetClass = "ui-corner-all ui-widget-content box";
+			$("#output").attr("class",resetClass);
+		}
+		
+		//맨 처음 문서가 열리면 reset함수 호출
+		reset();
+		
+		$("button").click(function(){
+			reset();
+		});
+		
+		$("#radio > input").change(function(){  //id가 radio의 input인 것
+			reset();
+			$("#output").addClass("ui-state-" + $(this).val() ); //선택한 value 값을 붙여줌
+		});
+	})
+</script>
+</head>
+<body>
+	<div id="radio">
+		<input type="radio" name="theme" id="highlight" value="highlight">
+		<label for="highlight">highlight</label>
+		
+		<input type="radio" name="theme" id="error" value="error">
+		<label for="error">error</label>
+		
+		<input type="radio" name="theme" id="error_text" value="error_text">
+		<label for="error_text">error_text</label>
+		
+		<input type="radio" name="theme" id="disabled" value="disabled">
+		<label for="disabled">disabled</label>
+		
+		<button>RESET</button>
+	</div>
+	
+	<div id="output">
+		<p>질병관리청 코로나19 예방접종 대응추진단은 이날 "추가 접종은 3차 접종을 완료한 사람 중 면역 저하자 약 130만 명과 요양병원·시설 입원·입소자 및 종사자 약 50만 명을 대상으로 실시한다"고 밝혔다.</p>
+	</div>
+</body>
+</html>
