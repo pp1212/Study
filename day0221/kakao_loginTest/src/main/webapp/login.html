@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript">
+	Kakao.init("cb867968b137f5ce568960c2a63abd83");	
+	function kakaoLogin(){
+		//카카오가 제공하는 카카오 서비스 인증
+		Kakao.Auth.loginForm({	//로그인만 시켜줌
+			scope:"profile_nickname,account_email,gender,age_range,birthday",
+			success:function(authObj){
+				console.log(authObj);
+				//로그인 한 정보를 가져오는 것 필요
+				Kakao.API.request({
+					url:"/v2/user/me",
+					success:function(res){	//res에 요청한 정보 담아옴
+						console.log(res);
+						let email = res.kakao_account.email;
+						location.href="/KakaoLoginOK/"+email;	//여기로 보냄-controller에 requestMapping
+					}
+				});
+			}
+		});
+		
+	}
+</script>
+</head>
+<body>
+	<a href="javascript:kakaoLogin()">카카오 로그인</a>
+</body>
+</html>
